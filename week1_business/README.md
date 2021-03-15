@@ -1,6 +1,4 @@
-# Engineering_84_business_week
-
-## Interview preparation
+# Interview preparation
 
 1. **What is DevOps and what is the benefit of using it?**
 
