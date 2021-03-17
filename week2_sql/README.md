@@ -10,9 +10,20 @@ Structured way of storing data and is accessible in various ways.
 
 **Database Normalisation**
 
-It is the process of structuring (relational) databases, in accordance to the normal forms, such that data redundancy is reduced. 
+> It is the process of structuring (relational) databases, in accordance to the normal forms, such that data redundancy is reduced. 
 
-##Terminology
+- *First Normal Form (1NF)*
+
+  make everything atomic, ie as small as it can be
+  no repeating groups
+
+- *Second Normal Form(2NF)*
+
+  Must satisfy 1NF
+  Non primary key attributes are ...
+
+
+## Terminology
 
 - **Columns**: The attribute / characteristic of a table
 - **Row**: one set of attributes (also records or tuples)
@@ -31,10 +42,13 @@ The many to many relation is implemented with a **Junction table** - a table tha
 
 ## Comannds
 
-**Data Manipulation Language** (DML) : Includes SELECT, INSERT, UPDATE, DELETE
-**Data Definition Languate** (DDL) : Includes CREATE, ALTER, DROP, TRUNCATE
-**Data Control Language** (DCL) : Includes GRANT, REVOKE
-**Transaction Control Language** (TCL) : Includes COMMIT, ROLLBACK, SAVEPOINT
+**Data Manipulation Language** (DML) : [SELECT, INSERT, UPDATE, DELETE]
+
+**Data Definition Languate** (DDL) : [CREATE, ALTER, DROP, TRUNCATE]
+
+**Data Control Language** (DCL) : [GRANT, REVOKE]
+
+**Transaction Control Language** (TCL) : [COMMIT, ROLLBACK, SAVEPOINT]
 
 
 
