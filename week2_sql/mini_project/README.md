@@ -11,9 +11,11 @@ SELECT Customers.CustomerID, Customers.CompanyName, CONCAT(Customers.Address, ' 
     FROM Customers WHERE Customers.City IN ('London', 'Paris');
 ```
 
+<br>
+
 > 1.2 List all products stored in bottles.
 
-* Strategy: Use a regular expression to find the products that contain the pattern 'bottle' in their quantity*
+*Strategy: Use a regular expression to find the products that contain the pattern 'bottle' in their quantity*
 
 ```SQL
 SELECT * FROM Products WHERE Products.QuantityPerUnit LIKE '%bottle%';
