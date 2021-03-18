@@ -26,14 +26,14 @@ SELECT CONCAT(Employees.TitleOfCourtesy, ' ', Employees.FirstName, ' ', Employee
 
 
 --1.6 List sales totals for all sales regions (via territories table using 4 joins) with sales total greatern than 1Mil. Round or format to present numbers
-SELECT rg.RegionID, rg.RegionDescription, FORMAT(ROUND(SUM(odt.Quantity * odt.UnitPrice),-5), '###,###,###') as "Total Sales (Approx.)"
+SELECT rg.RegionID, rg.RegionDescription, FORMAT(ROUND(SUM(odt.Quantity * odt.UnitPrice * (1-odt.Discount)),-5), '###,###,###') as "Total Sales (Approx.)"
     FROM Region as rg
     INNER JOIN Territories as tr on rg.RegionID = tr.RegionID
     INNER JOIN EmployeeTerritories as emt on tr.TerritoryID = emt.TerritoryID
     INNER JOIN Orders as ord on emt.EmployeeID = ord.EmployeeID
     INNER JOIN [Order Details] as odt on ord.OrderID = odt.OrderID
     GROUP BY rg.RegionID, rg.RegionDescription
-    HAVING SUM(odt.Quantity * odt.UnitPrice) > 1000000;
+    HAVING SUM(odt.Quantity * odt.UnitPrice * (1-odt.Discount)) > 1000000;
 
 
 --1.7 Count orders with freight amount > 100 with USA or UK as destination.
@@ -46,3 +46,4 @@ SELECT COUNT(*) AS "Orders with Freight above 100 and destination US or UK"
 -- ignore product id
 
 SELECT top 1 *, (odt.UnitPrice*odt.Quantity*odt.Discount) AS "Discount Applied" FROM [Order Details] odt ORDER BY "Discount Applied" DESC
+

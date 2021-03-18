@@ -66,23 +66,47 @@ SELECT CONCAT(Employees.TitleOfCourtesy, ' ', Employees.FirstName, ' ', Employee
 
 > 1.6 List Sales Totals for all Sales Regions (via the Territories table using 4 joins) with a Sales Total greater than 1,000,000. Use rounding or FORMAT to present the numbers.  
 
-*Strategy: In this exercise, the NORTHWIND database diagram was used to find the appropriate connection between tables, such that the 4 joints condition is met. For the Territories Table to also be included, one of the possible starting points can be the Regions Table. From there the  *
+*Strategy: In this exercise, the NORTHWIND database diagram was used to find the appropriate connection between tables, such that the 4 joints condition is met. 
+For the Territories Table to also be included, the connection follows, as seen in the diagram below, starting from the Regions, then Territories, Employee Territories, then Orders and finally [Order Details].
+The Employee Table was skipped, as the Employee IDs are included in the Order Table as well. The value of each Region was calculated by taking in account the discount applied as well.*
 ![NorthWind Diagram](media/database_diagram_ex1p6.jpg)
 
 ```SQL
-SELECT rg.RegionID, rg.RegionDescription, FORMAT(ROUND(SUM(odt.Quantity * odt.UnitPrice),-5), '###,###,###') as "Total Sales (Approx.)"
+SELECT rg.RegionID, rg.RegionDescription, FORMAT(ROUND(SUM(odt.Quantity * odt.UnitPrice * (1-odt.Discount)),-5), '###,###,###') as "Total Sales (Approx.)"
     FROM Region as rg
     INNER JOIN Territories as tr on rg.RegionID = tr.RegionID
     INNER JOIN EmployeeTerritories as emt on tr.TerritoryID = emt.TerritoryID
     INNER JOIN Orders as ord on emt.EmployeeID = ord.EmployeeID
     INNER JOIN [Order Details] as odt on ord.OrderID = odt.OrderID
     GROUP BY rg.RegionID, rg.RegionDescription
-    HAVING SUM(odt.Quantity * odt.UnitPrice) > 1000000;
+    HAVING SUM(odt.Quantity * odt.UnitPrice * (1-odt.Discount)) > 1000000;
 ```
 <br>
+<br>
 
->
+> 1.7 Count how many Orders have a Freight amount greater than 100.00 and either USA or UK as Ship Country. 
 
-Count how many Orders have a Freight amount greater than 100.00 and either USA or UK as Ship Country. 
+*Strategy: Simple Filtering with two conditions; an inequality condition and a subquery looking for the keywords 'UK' and 'USA' in the Order Countries*
 
-Write an SQL Statement to identify the Order Number of the Order with the highest amount(value) of discount applied to that order.
+```SQL
+SELECT COUNT(*) AS "Orders with Freight above 100 and destination US or UK" 
+    FROM Orders
+    WHERE Orders.Freight > 100 AND Orders.ShipCountry IN ('UK', 'USA');
+```
+<br>
+<br>
+
+
+> 1.8 Write an SQL Statement to identify the Order Number of the Order with the highest amount(value) of discount applied to that order.
+
+*Strategy: Initially, the value of the products was taken from the Products Table, however that wasn't helpful as the value of the same products would be different in the [Order Details] Table.
+Therefore, only the [Order Details] info is used. The orders are grouped by ID and then sorted with descending order based on the discount that is applied, which is calculated in the select statement. The first 
+result is the order with the highest discount applied* 
+
+```SQL
+SELECT TOP 1 odt.OrderID, ROUND(SUM(odt.UnitPrice*odt.Quantity*odt.Discount),0) AS "Discount Applied" 
+    FROM [Order Details] odt 
+    GROUP BY odt.OrderID
+    ORDER BY "Discount Applied" DESC
+```
+
