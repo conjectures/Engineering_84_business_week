@@ -2,13 +2,24 @@
 
 ## Theory
 
-**What is a database?**
+> **What is a database?**
 
-  Structured way of storing data and is accessible in various ways.
+  It is an organized collection of structured information, stored in a computer sustem, and is accessible in various ways.
+  A database is usually controlled by a database management system (DMBS) that acts as a mediator between the user and tha database.
 
-    Structured way of storing data and is accessible in various ways.
+> **What is a relational database?**
+
+  Relational databases organize their data in tables that are linked to columns that are common in other tables. This 
+  relation enables data to be retrieved from multiple tables with a single query.
+  The benefit of using relational databases is that they can retrieve a lot of data with complex queries very fast.
 
 **What is SQL**
+
+    Structured Query Language (SQL) is the standard way of communicating with databases. The commands used by SQL are
+    categorised into mainly four categories:
+
+      - **Data Definition Language**
+
 
 <br>
 
@@ -46,7 +57,7 @@
 
 The many to many relation is implemented with a **Junction table** - a table that forms a composite key with the foreign keys of the records that are connected.
 
-## Comannds
+## Cheat Sheet
 
 **Data Manipulation Language** (DML) : [SELECT, INSERT, UPDATE, DELETE]
 
