@@ -49,4 +49,3 @@ SELECT FORMAT(Orders.OrderDate, 'MM-yy') AS "Shipment month", AVG(DATEDIFF(d, Or
     FROM Orders
     GROUP BY FORMAT(Orders.OrderDate, 'MM-yy')
     ORDER BY FORMAT(Orders.OrderDate, 'MM-yy') 
-    
