@@ -15,11 +15,13 @@ Structured way of storing data and is accessible in various ways.
 - *First Normal Form (1NF)*
 
   make everything atomic, ie as small as it can be
+
   no repeating groups
 
 - *Second Normal Form(2NF)*
 
   Must satisfy 1NF
+
   Non primary key attributes are ...
 
 
