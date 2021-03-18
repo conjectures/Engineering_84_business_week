@@ -110,3 +110,106 @@ SELECT TOP 1 odt.OrderID, ROUND(SUM(odt.UnitPrice*odt.Quantity*odt.Discount),0) 
     ORDER BY "Discount Applied" DESC
 ```
 
+<br>
+<br>
+<br>
+
+## Part 2
+
+> 2.1 Write the correct SQL statement to create the following table: 
+> 
+> Spartans Table – include details about all the Spartans on this course. Separate Title, First Name and Last Name into separate columns, 
+> and include University attended, course taken and mark achieved. Add any other columns you feel would be appropriate.  
+
+*Strategy: Simple creation of table. Added extra column for date enrolled.*
+
+```SQL
+create table spartans_table (
+    sparta_id INT IDENTITY(1,1) PRIMARY KEY,
+    title VARCHAR(4),
+    first_name VARCHAR(10),
+    last_name VARCHAR(10),
+    university VARCHAR(15),
+    date_enrolled DATE,
+    course_code CHAR(6),
+    mark INT
+)
+```
+<br>
+<br>
+
+> 2.2 Write SQL statements to add the details of the Spartans in your course to the table you have created.	 
+
+```SQL
+INSERT INTO spartans_table 
+    VALUES
+    ('Mr.', 'John', 'Smith', 'UCL', '10/1/2016', 'ECE456', 60),
+    ('Ms.', 'Mary', 'Johnson', 'CAL', '10/2/2015', 'PHY213', 73),
+    ('Dr.', 'Peter', 'Lowe', 'UoE', '09/28/2018', 'CS-112', 77 )
+```
+<br>
+<br>
+<br>
+
+## Part 3
+
+3.1 List all Employees from the Employees table and who they report to. No Excel required. Please mention the Employee Names and the Report To names. (5 Marks)
+
+*Strategy:*
+
+```SQL
+SELECT CONCAT(emp.TitleOfCourtesy, ' ', emp.FirstName, ' ', emp.LastName) AS "Employee", CONCAT(man.TitleOfCourtesy, ' ', man.FirstName, ' ', man.LastName) AS "Manager"
+    FROM Employees as emp
+    LEFT JOIN Employees as man ON emp.ReportsTo = man.EmployeeID 
+```
+
+<br>
+<br>
+
+> 3.2 List all Suppliers with total sales over $10,000 in the Order Details table. Include the Company Name from the Suppliers Table and present as a bar chart as below: (5 Marks) 
+
+*Strategy:*
+
+```SQL
+SELECT prd.SupplierID, Suppliers.CompanyName, FORMAT(SUM(odt.Quantity*odt.UnitPrice*(1-odt.Discount)), '###,###,###') AS "Sales"
+    FROM [Order Details] as odt
+    INNER JOIN Products as prd ON odt.ProductID = prd.ProductID
+    INNER JOIN Suppliers ON prd.SupplierID = Suppliers.SupplierID
+    GROUP BY prd.SupplierID, Suppliers.CompanyName
+    HAVING SUM(odt.Quantity*odt.UnitPrice*(1-odt.Discount)) > 10000
+    ORDER BY SUM(odt.Quantity*odt.UnitPrice*(1-odt.Discount))
+```
+![Supplier Graph](media/ex3p2_graph.jpg)
+
+<br>
+<br>
+
+> 3.3 List the Top 10 Customers YTD for the latest year in the Orders file. Based on total value of orders shipped. No Excel required. (10 Marks) 
+
+*Strategy:*
+
+```SQL
+SELECT TOP 10 Customers.CustomerID, Customers.ContactName, SUM(odt.UnitPrice*odt.Quantity*(1-odt.Discount)) AS "Value of Orders"
+    FROM Orders
+    INNER JOIN Customers On Orders.CustomerID = Customers.CustomerID
+    INNER JOIN [Order Details] as odt ON Orders.OrderID = odt.OrderID
+    WHERE YEAR(Orders.OrderDate)=(SELECT MAX(YEAR(Orders.OrderDate)) FROM Orders)
+    --WHERE Orders.OrderDate >= '19980101' AND Orders.ShippedDate IS NOT NULL
+    GROUP BY Customers.CustomerID, Customers.ContactName
+    ORDER BY SUM(odt.UnitPrice*odt.Quantity*(1-odt.Discount)) DESC
+```
+
+<br>
+<br>
+
+> 3.4 Plot the Average Ship Time by month for all data in the Orders Table using a line chart as below. (10 Marks) 
+*Strategy:*
+
+```SQL
+SELECT FORMAT(Orders.OrderDate, 'yy-MM') AS "Shipment month", AVG(DATEDIFF(d, Orders.OrderDate, Orders.ShippedDate)) AS "Days to Ship"
+    FROM Orders
+    GROUP BY FORMAT(Orders.OrderDate, 'yy-MM')
+    ORDER BY FORMAT(Orders.OrderDate, 'yy-MM') 
+```
+
+![Average Ship Time By Month](media/ex3p4_graph.jpg)
