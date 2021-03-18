@@ -202,7 +202,8 @@ SELECT TOP 10 Customers.CustomerID, Customers.ContactName, SUM(odt.UnitPrice*odt
 <br>
 <br>
 
-> 3.4 Plot the Average Ship Time by month for all data in the Orders Table using a line chart as below. (10 Marks) 
+> 3.4 Plot the Average Ship Time by month for all data in the Orders Table using a line chart as below. (10 Marks)
+
 *Strategy:*
 
 ```SQL

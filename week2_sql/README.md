@@ -4,7 +4,11 @@
 
 **What is a database?**
 
-Structured way of storing data and is accessible in various ways.
+  Structured way of storing data and is accessible in various ways.
+
+    Structured way of storing data and is accessible in various ways.
+
+**What is SQL**
 
 <br>
 
