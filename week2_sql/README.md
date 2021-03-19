@@ -15,8 +15,8 @@
 
 ### What is SQL
 
-    Structured Query Language (SQL) is the standard way of communicating with databases. The commands used by SQL are
-    categorised into mainly four categories; **Data Manipulation**, **Data Definition**, **Data Control** and *Transaction Control** Languages
+  Structured Query Language (SQL) is the standard way of communicating with databases. The commands used by SQL are
+  categorised into mainly four categories; **Data Manipulation**, **Data Definition**, **Data Control** and *Transaction Control** Languages
 
 | DML | DDL | DCL | TCL |
 | --- | --- | --- | --- |
@@ -45,53 +45,99 @@
 > |ID|Name|Subject|
 > |---|---|---|
 > |01|Bob|Maths,Chemistry|
-> |02|Lewis|Language|
+> |02|Lewis|Maths|
 > |03|Jane|Computer Science|
 > 
 > The first row contains multiple values in the same column for attribute 'Subject'. The above table should change as shown below:
 >
 > |ID|Name|Subject|
 > |---|---|---|
-> |01|Bob|Maths,Chemistry|
+> |01|Bob|Maths|
 > |01|Bob|Chemistry|
-> |02|Lewis|Language|
+> |02|Lewis|Maths|
 > |03|Jane|Computer Science|
 
 - **2NF**
     + Satisfies 1NF
     + Non-prime attirbutes do not have Partial Functional Dependency on *prime* or *candidate* keys.
 
-- **2NF**
+> Example
+> 
+> |ID|Name|Subject| Teacher |
+> |---|---| ---   | ---     |
+> |01|Bob|Maths   | Mr.John |
+> |01|Bob|Chemistry| Ms. Mary |
+> |02|Lewis|Maths|   Mr.John|
+> |04|Jane|Computer Science| Ms. Smith|
+>
+> In the above table, the primary key is the combination of Student ID and Subject. However the teacher only depends on the Subject and not on the ID of the student.
+> The table should be split into two with both adhering the first and second normal form:
+>
+> |ID|Name|Subject| 
+> |---|---| ---   |
+> |01|Bob|Maths   | 
+> |01|Bob|Chemistry|
+> |02|Lewis|Maths| 
+> |04|Jane|Computer Science| 
+>
+> ||Subject| Teacher |
+> |---   | ---     |
+> |Maths   | Mr.John |
+> |Chemistry| Ms. Mary |
+> |Computer Science| Ms. Smith|
+
+- **3NF**
     + Satisfies 2NF
     + Doesn't have Transitive Dependency, where, non-prime attributes depend on another non-prime attribute rather than a primary key.
 
+> Example:
+>
+> |ID|Name|Subject| School| Total Students
+> |---|---| ---   | ---     | --- |
+> |01|Bob|Maths   | St. Johns| 150|
+> |01|Bob|Chemistry| St. Johns| 150|
+> |02|Lewis|Maths| Edmonton| 200|
+> |04|Jane|Computer Science| St. Johns| 150|
+>
+> In the above table, the Total Student attribute depends on a non-prime attribue, the School. For the table to satisfy the 3NF, the School Students table must
+> be split into a related table:
+>
+> |ID|Name|Subject| School| 
+> |---|---| ---   | ---     |
+> |01|Bob|Maths   | St. Johns|
+> |01|Bob|Chemistry| St. Johns|
+> |02|Lewis|Maths| Edmonton|
+> |04|Jane|Computer Science| St. Johns|
+>
+> |School| Total Students
+> | ---     | --- |
+> | St. Johns| 150|
+> | Edmonton| 200|
 
-## Terminology
 
-- **Columns**: The attribute / characteristic of a table
-- **Row**: one set of attributes (also records or tuples)
-- **Table**
-- **DBMS**
-- **Compound Key**
-- **Primary key**
-- **Foreign key** Used to create 
+### What is a primary key
 
-**Relations**
+### What is a foreign key
+
+### What is a candidate key
+
+### What is a composite key
+
+
+### What are the Table Relations
 - One to one
 - One to many
 - Many to many
 
+### What is a Junction Table
 The many to many relation is implemented with a **Junction table** - a table that forms a composite key with the foreign keys of the records that are connected.
 
 ## Cheat Sheet
 
-**Data Manipulation Language** (DML) : [SELECT, INSERT, UPDATE, DELETE]
+## Tips
 
-**Data Definition Languate** (DDL) : [CREATE, ALTER, DROP, TRUNCATE]
+- **Escaping apostrophe**
 
-**Data Control Language** (DCL) : [GRANT, REVOKE]
-
-**Transaction Control Language** (TCL) : [COMMIT, ROLLBACK, SAVEPOINT]
 
 
 
