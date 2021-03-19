@@ -80,7 +80,7 @@
 > |02|Lewis|Maths| 
 > |04|Jane|Computer Science| 
 >
-> ||Subject| Teacher |
+> |Subject| Teacher |
 > |---   | ---     |
 > |Maths   | Mr.John |
 > |Chemistry| Ms. Mary |
@@ -92,7 +92,7 @@
 
 > Example:
 >
-> |ID|Name|Subject| School| Total Students
+> |ID|Name|Subject| School| Total Students|
 > |---|---| ---   | ---     | --- |
 > |01|Bob|Maths   | St. Johns| 150|
 > |01|Bob|Chemistry| St. Johns| 150|
@@ -116,12 +116,37 @@
 
 
 ### What is a primary key
+In a relational database, the Primary Key is an attribute that is used to uniquely identifies a row (or tuple). 
+It has to be an attribute that is guaranteed to be unique and does not change. 
+Also, it cannot be blank or Null. 
+The DBMS will enforce the Primary key to take a unique, non-null value and will restrict the existence of repeated records.
 
-### What is a foreign key
+
+### What is a composite/compound key
+A composite key is a specific type of primary key which uses the contents of two or more fields from a table to create a unique value.  
+In the below table the Name and Subject attributes are not entirely unique, but together they form a composite key which is unique.
+>|Name|Subject|Mark|
+>|---|---|---|
+>|Bob|C++|90| 
+>|Bob|Java|80|
+>|John|Java|70|
+>
+A compound key is similar to a composite key, in that two ro more fields are needed to create a unique key, but it is formed when two ro more
+primary keys of different tables are combined.
 
 ### What is a candidate key
+Candidate keys are the set of attributes that uniquely identify tuples in a table, ie. They are  attributes without repeating values. 
+The Primary key should be selected from within the candidate keys. 
+In essence, a candidate key is an attribute that contains only unique values and can identify each record in the table, it may have mutliple columns and it must not contain null values.
 
-### What is a composite key
+### What is a foreign key
+The primary key of a table can be linked to a different table as a foreign key. Via this link, the two tables are connected (or related).  Foreign keys ensure that info in table A is correlated correctly to a row of information in table B (data integration) 
+
+There are no uniqueness constraints for a foreign key, that is, a foreign key can appear multiple times in the same table. 
+
+Special care needs to be taken when removing information that appears in another table via a foreign key. 
+A primary key that appears as foreign key in another table must be first removed from the related table it appears, and then can be safely removed. 
+Alternatively, the relation can be defined as 'ON DELETE CASCADE' where the foreign key appearances are automatically removed.
 
 
 ### What are the Table Relations
