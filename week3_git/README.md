@@ -3,14 +3,14 @@
 **What is Git and what is it used for?**
 
 Git is version control management software developed by linux kernel developers. 
-It is used for collaborative development of source code during software development and for ...
+It is used for collaborative development of source code during software development.
+Additionally, it is very useful in keeping different versions of the source code in case something goes wrong with your local machine, or if the new version breaks.
 
 ## Setup Guide
 
 Prerequisites:
 - Github account
 
-<br>
 <br>
 
 1. **Create a key**
@@ -27,7 +27,6 @@ Prerequisites:
      - b: bits used in the encryption hash (more bits means better encryption)
 
 <br>
-<br>
 
 2. **Locate the key**
 
@@ -36,7 +35,6 @@ Prerequisites:
    cd ~/.ssh
    ls
    ```
-<br>
 <br>
 
 3. **Get Public key**
@@ -48,7 +46,6 @@ Prerequisites:
    Copy the output of the above command (including the email)
 
 <br>
-<br>
 
 4. **Go to appropriate settings on Github and add the public key**
     - Open your github page, log-in, and then click on the drop down menu on your user icon.
@@ -58,7 +55,6 @@ Prerequisites:
 
   Congratulations! Your SSH key was added.
 <br>
-<br>
 
 5. **Create a new repository**
     - Go to your home page and click the green button on the upper left part of the page to create a new repo.
@@ -67,7 +63,6 @@ Prerequisites:
     - (Optional) Select if private or public repo.
     - Create the repository by selecting the green button on the bottom.
 
-<br>
 <br>
 
 6. **Follow steps to create the local repo and then add it to github**
@@ -91,7 +86,8 @@ Prerequisites:
      ```bash
      git commit -m "First commit: add README.md to repo"
      ```
-     - Change the branch name to `main` (or leave it as `master`, but use the same branch when pushing)
+     - Change the branch name to `main` (or leave it as `master`, but use the same branch when pushing). 
+     The branch can't be changed before adding a commit (there is no history in current branch, therefore it doesnt 'exist')
      ```bash
      git branch -M main
      ```
