@@ -13,7 +13,7 @@ Prerequisites:
 
 <br>
 
-1. **Create a key**
+### 1. **Create a key**
 
    Create an ssh key pair in your local machine and tag your email address to it.
 
@@ -28,7 +28,7 @@ Prerequisites:
 
 <br>
 
-2. **Locate the key**
+### 2. **Locate the key**
 
    The new key is located in the `~/.ssh` directory on linux systems. Change working directory there and list the contents.
    ```bash
@@ -37,7 +37,7 @@ Prerequisites:
    ```
 <br>
 
-3. **Get Public key**
+### 3. **Get Public key**
 
    The `ls` command should list the new ssh keys that were generated. Find the public key, which has the suffix `.pub` and copy its contents:
    ```bash
@@ -47,7 +47,7 @@ Prerequisites:
 
 <br>
 
-4. **Go to appropriate settings on Github and add the public key**
+### 4. **Go to appropriate settings on Github and add the public key**
     - Open your github page, log-in, and then click on the drop down menu on your user icon.
     - From there, select the second to last option **_Settings_**.
     - From Settings, choose the **_SSH and GPG keys_** tab
@@ -56,7 +56,7 @@ Prerequisites:
   Congratulations! Your SSH key was added.
 <br>
 
-5. **Create a new repository**
+### 5. **Create a new repository**
     - Go to your home page and click the green button on the upper left part of the page to create a new repo.
     - Add a name next to the your username. Make sure the name is uniqe from your repositories.
     - Add description if needed. Don't add any other files (README.md, .gitignore, license)
@@ -65,7 +65,7 @@ Prerequisites:
 
 <br>
 
-6. **Follow steps to create the local repo and then add it to github**
+### 6. **Follow steps to create the local repo and then add it to github**
 
    When the repo is first created, make sure the **SSH** option is selected on the 'Quick setup' box
    Then, on your local machine, change your current directory to the directory you want to have your project.
