@@ -51,4 +51,51 @@ popped_item = shopping_list.pop(1)
 # shopping_list = ['linguini', 'avocados', 'milk', 'cherries']
 ```
 
+<br>
 
+## What are tuples?
+Tuples are exactly the same as lists, but they are IMMUTABLE. 
+They use the round brackets for syntax, i.e `()`
+
+When we try to change a value inside a tuple, we get a `TypeError`:
+```python
+TypeError: 'tuple' object does not support item assignement
+```
+
+## What are dictionaries?
+Dictionaries use KEY VALUE pairs to save the data.
+The data can be retrieved by its value, or by its key.
+They are mutable and they are created inside the curly brackets, i.e. `{}`
+
+Additionally, dictionaries can also contain lists.
+```python
+dev= {
+        "key": "value",
+        "name": "James",
+        "stream": "DevOps",
+        "completed": 3,
+        "completed_names": ['Variables', 'Data Types', 'Collections']
+
+        }
+```
+- Getting values
+- Addinng key-values
+- Removing
+- Updating values
+
+## What are Sets?
+Sets also use curly brackets `{}`
+They are unordered. The position of the items is not guaranteed (and unpredictable)
+```python
+car_parts = {"wheels", "engine", "doors"}
+```
+
+- Adding to sets:
+```python
+car_parts.add('seats')
+```
+
+- Removing from sets:
+```python
+car_parts.discard('engine')
+```
