@@ -2,7 +2,7 @@
 # Store items in a list with dictionary entries
 menu_list = [
         {'item': 'burger', 'category': 'main', 'price': 14},
-        {'item': 'fires', 'category': 'side', 'price': 3},
+        {'item': 'fries', 'category': 'side', 'price': 3},
         {'item': 'cheeseburger', 'category': 'main', 'price': 16},
         {'item': 'soda', 'category': 'drink', 'price': 2},
         ]
