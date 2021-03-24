@@ -1,4 +1,4 @@
-# TASK 2 - Restaurant Waiter Helper Program
+# TASK 3 - Xmas Holiday List
 
 ## Summary
 Amazing, you've learner about the for loop!
@@ -24,5 +24,44 @@ Read the task for the user stories.
 Run the program with `python main.py`, or `python3` according to python version. 
 **The program uses python 3.7++**
 
+The program first starts by asking the user for items he would like for Christmas
+```python
+print("What would you like this Christmas? (write 'exit to stom program')")
+```
+The program will continue to ask for items until the user writes `exit` in the prompt (not case sensitive)
+
+Finally, the whole list will be printed in the end:
+```python
+What i need to buy:
+  1. PLANE
+  2. BOAT
+  3. SHIRT
+  4. SOCKS
+```
+
 
 ## Solution
+Initially, the christmas list is declared as an empty list:
+```python
+christmas_list = []
+```
+Then, inside an infinite loop, the program asks for items from the user:
+```python
+    wish = input()
+```
+
+The program checks if the wish input was equal to the work 'exit' to stop executing the program
+```python
+    if wish.lower() == 'exit':
+        break
+```
+
+If all is well, the item is appended to the list, and a new loop executes.
+```python
+    christmas_list.append(wish)
+```
+On the other hand, if the exit criteria for the loop is met, the program will loop through the list up to this point and print all the items in uppercase:
+```python
+for idx, item in enumerate(christmas_list):
+    print(f"  {idx+1}. {item.upper()}")
+```
