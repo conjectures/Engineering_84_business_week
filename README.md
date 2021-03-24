@@ -20,3 +20,29 @@ else:
   print('Sorry, you are not allowed to buy')
 ```
 
+## Loops
+Loops help us iterate through the data, or repeat a piece of code for a number of times
+
+- for
+- while
+
+For example, if we want to view the items of a shopping list:
+```python
+shopping_list = ["bread", "eggs", "milk", "orange"]
+
+# Print each item
+print(shopping_list[0])
+print(shopping_list[1])
+print(shopping_list[2])
+print(shopping_list[3])
+```
+Instead, of printing each item index, we can iterate over the item with a for loop:
+```python
+for items in shopping_list:
+    print(items)
+```
+With the above code snippet, we have transformed our code into a simpler and more readible form.
+
+
+
+
