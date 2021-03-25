@@ -8,7 +8,7 @@
 #   - Multiply
 #   - Divide
 
-# 2. Buld more functions for 
+# 2. Buld more functions for
 #   - Area of a circle
 #   - Area of a square
 #   - Area of a triangle
@@ -18,7 +18,7 @@
 # - Assert against known values. Adding 10+30 will alwyas be 40
 
 
-#Define functions for calculations
+# Define functions for calculations
 def add(x, y):
     return x + y
 
@@ -64,6 +64,15 @@ def ask_number():
         print('Bad value. Try again: ')
 
 
+def ask_nonzero():
+    while True:
+        choice = input()
+        if choice.isdigit():
+            if int(choice) != 0:
+                return int(choice)
+        print('Bad value. Try again: ')
+
+
 def ask_positive_number():
     while True:
         choice = input()
@@ -91,44 +100,52 @@ def calculator():
     while True:
         menu()
         choice = ask_choice(8)
+        # Adddition
         if choice == 0:
             print('First number?')
             x = ask_number()
             print('Second number?')
             y = ask_number()
             print(f'Result: {add(x,y)}')
+        # Subtraction
         elif choice == 1:
             print('First number?')
             x = ask_number()
             print('Second number?')
             y = ask_number()
             print(f'Result: {subtract(x,y)}')
+        # Multiplication 
         elif choice == 2:
             print('First number?')
             x = ask_number()
             print('Second number?')
             y = ask_number()
             print(f'Result: {multiply(x,y)}')
+        # Division 
         elif choice == 3:
             print('First number?')
             x = ask_number()
             print('Second number?')
-            y = ask_number()
+            y = ask_nonzero()
             print(f'Result: {divide(x,y)}')
+        # Area of a circle
         elif choice == 4:
             print('Radius?')
             x = ask_positive_number()
             print(f'Result: {area_of_circle(x)}')
+        # Area of a square 
         elif choice == 5:
             print('Side length?')
             x = ask_positive_number()
             print(f'Result: {area_of_square(x)}')
+        # Area of a triangle
         elif choice == 6:
             print('Height?')
             x = ask_positive_number()
             print('Base?')
             y = ask_positive_number()
             print(f'Result: {area_of_triangle(x,y)}')
+        # Exit
         elif choice == 7:
             print('Goodbye')
             return
