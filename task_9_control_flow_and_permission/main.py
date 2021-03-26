@@ -16,7 +16,9 @@ def get_permission(age, driver_license):
     if isinstance(age, str):
         if age.isdigit():
             age = int(age)
-
+        else:
+            print('Bad value')
+            return
     # age <= 16
     #   no drinking
     #   no voting
@@ -50,6 +52,7 @@ def get_permission(age, driver_license):
             print('You can drive')
 
 
+# Function used to get a number from user input, ask again if not appropriate and return it as integer
 def ask_number():
     while True:
         choice = input()
@@ -60,12 +63,14 @@ def ask_number():
         print('Bad value. Try again: ')
 
 
+# Check if the number is above 0
 def num_in_bounds(number):
     if number > 0:
         return True
     return False
 
 
+# Return True if value is 'y' or 'yes'. Return False if 'n' or 'no'. Return None otherwise
 def yes_no_true_false(value):
     if value.lower() in ['y', 'yes']:
         return True
@@ -74,6 +79,7 @@ def yes_no_true_false(value):
     return None
 
 
+# Continue asking for user input until yes or no is given
 def ask_yes_no():
     while True:
         choice = yes_no_true_false(input())
@@ -102,8 +108,7 @@ def showcase():
     get_permission(55, False)
 
 
-if __name__ == '__main__':
-
+def main():
     while True:
         choice = input("\nCheck your permissions?\n (Enter any value to continue, or enter 'exit' to quit)\n")
         if choice.lower() == 'exit':
@@ -118,3 +123,8 @@ if __name__ == '__main__':
             # if driver is less than 17 don't even ask for license
             get_permission(age, False)
     print('Goodbye')
+
+
+if __name__ == '__main__':
+    main()
+
