@@ -157,11 +157,20 @@ Alternatively, the relation can be defined as 'ON DELETE CASCADE' where the fore
 ### What is a Junction Table
 The many to many relation is implemented with a **Junction table** - a table that forms a composite key with the foreign keys of the records that are connected.
 
+### What are joins
+Joins are how SQL merges different tables that are related through a foreign key.
+For the join to succeed, the user has to specify at least one common attribute from both tables.
+The joins can include only the related records from both tables (**inner join**).
+Alternatively, a join can  contain all of the records of one table and only the related records of the second table with the **left outer join** and **right outer join**,
+depending of which table is declared first with the `FROM` statement. Finally, all of the records can be shown if the **full outer join** is used.
+
 ## Cheat Sheet
 
 ## Tips
 
 - **Escaping apostrophe**
+SQL uses the apostrophe `'` as an escape character. That means when filtering through records with a `LIKE` statement, if the string provided includes an apostrophe, 
+the user has to be careful to escape the character first with another apostrophe right before it.
 
 
 
