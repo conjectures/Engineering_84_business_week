@@ -74,6 +74,20 @@ c = { **a, **b }
 # c = { 'a':1, 'b':2, 'B':3 }
 ```
 
+A funtionality method was added that would print the scoring policy of the class by iterating through the dictionary and printing the keys with the corresponding points they get:
+```python
+    # Method that prints the internal
+    def show_scoring(self):
+        for key, value in self.score_table.items():
+            print(f'{key} gets {value} points.')
+```
+
+Finally, the scoring method is shown below. Firstly it checks to see if the input was a string. 
+Then a variable is defined that is used to store the sum of the points. 
+While traversing the string, each letter is used as a key to search the scoring table dictionary. The points are stored in a temporary variable named `value`.
+This temporary variable is used to check if the value is not a `None` type, as the dictionary will return `None` if the string includes a symbol not included in the alphabet. 
+Therefore, with a simple ternary operator, the points of the letter are added to the sum, or the total is unchanged if the points are `None`.
+Finally the tally is returned for the user to print.
 ```python
     def score_word(self, word):
         if not isinstance(word, str):
@@ -88,10 +102,5 @@ c = { **a, **b }
             # Add value if it is not None
             total = total+value if value else total
         return total
-
-    # Method that prints the internal
-    def show_scoring(self):
-        for key, value in self.score_table.items():
-            print(f'{key} gets {value} points.')
-
 ```
+
