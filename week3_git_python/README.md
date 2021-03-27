@@ -1,4 +1,4 @@
-# Git & Python Week
+#Git & Python Week
 
 ## Lessons
 
@@ -7,8 +7,8 @@
 - [Subject 01: Variables](s01-variables)
 
 ### *Day 02*
-- [Subject 02: User Input]()
-- [Subject 03: Data Types & Operators](s02-datatypes-operators)
+- [Subject 02: User Input](s02-userinput)
+- [Subject 03: Data Types & Operators]()
 - [Subject 04: Data Collections]()
 
 
@@ -20,7 +20,7 @@
 - [Subject 07: Object Oriented Programming in Python]()
 - [Subject 08: Python Packages]()
 
-### *Day 04*
+### *Day 05*
 - [Week 1 Exercises]()
 
 
