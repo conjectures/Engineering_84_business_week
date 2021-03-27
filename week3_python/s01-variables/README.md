@@ -26,5 +26,6 @@ The `.gitignore` file will be taken in account and the enviromnet files will not
 To add comments in python we use `#`
 
 ### Variables
+Variables can be assigned of any value with the `=` operator.
 
 
