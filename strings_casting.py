@@ -45,5 +45,17 @@ print(white_space.capitalize())
 print(white_space.replace("space", "blankspace"))
 
 
+# Concatenation and Casting
+first_name = "James"
+last_name = "Bond"
+age = 30
+print(first_name + " " + last_name)
+print(first_name, last_name, age)
+
+
+# F strings
+#easier formatting
+print(f'{first_name} {last_name} is {age} years old')
+print(f"{first_name=}") # python 3.8
 
 

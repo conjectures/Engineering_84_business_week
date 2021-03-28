@@ -43,3 +43,14 @@ print(greetings[-6:])
 
 # Let's have a look at some string methods
 
+```python 
+print(greetings.upper())
+# HELLO WORLD!
+print(greetings.lower())
+# hello world!
+print(greetings.capitalize())
+# Hello World!
+print(greetings.replace("World", "Cosmos"))
+# Hello Cosmos!
+```
+
