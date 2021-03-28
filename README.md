@@ -23,7 +23,34 @@ The user knows how to plug in the lamp and fridge to the mains electricity but h
 **Inheritance** is very useful when there are similar objects that share common functionality but are not entirely the same.
 With inheritance, a class can pass down functionality to *children* classes, where the same code can be reused without rewriting the same methods.
 These children classes can then add more specific functionality and pass those down to other children, thus, forming a hierarcy of *parent* and *child* classes.
-A typical hierarchy example is animals - mammmals - dogs.
-## Why oop
-## Best use cases (?)
+A typical hierarchical inheritance example would be the class of *dogs*, which inherits from the class *mammals*, which in turn inherits from class *animals*
+
+**Polymorphism** is a Greek word that means to take more than one form; 
+Similarly, OOP classes should be able to take other forms, in the sense that an inherited class methods and attributes should be able to change according to the new object's needs.
+This could be as simple as increasing the arguments of a methods, to overwriting the whole function.
+An example of polymorphism could be found in the real life:
+If an inherited trait of mammals is the fact that they give birth to live younglings, the platypus, which is also classified as a mammal, is the exception.
+Instead, the platypus 'overwrites' this trait and changes it to laying eggs.
+
+## Why use Object Oriented Progaramming?
+The use of OOP is justified with many benefits.
+
+**Reusing code through Inheritance**
+Firstly, from one of the four pillars of OOP, inheritance, a lot of code gets to be reused, saving a lot of time in development. 
+Additionally, if for example we need to add or change a functionality in children classes of a single parent class; by applying the change to the parent class all of its inheritants will also be affected.
+Thus, by this simple relation, a lot extra work can be avoided.
+
+**Flexibility of code**
+Throught polymorphism, the objects can be reused and adapted, according to the use case. 
+This means that, the same library can be used in many different projects and can be fine-tuned to work perfectly for each instance.
+On many occasions, by using the same tried and tested code in different situations, can prove to be more time saving and less error prone, rather than rewriting the code from scratch
+
+**Easier troubleshooting**
+OOP promotes the creation of small and modular code, which makes it easier to troubleshoot errors in case something goes wrong. 
+Moreover, as promoted through encapsulation, additional functionality can be added to classes to handle errors, display messages or other helpful operations.
+
+**Intuitive structure**
+Object-Oriented Programming is more in line to the way humans see and interact with the world.
+Applying this higher-level approach to programming makes it easier to code and solve complicated problems.
+Code can be split into small chunks that can be solved, one at a time;
 
