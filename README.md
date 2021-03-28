@@ -35,25 +35,21 @@ Instead, the platypus 'overwrites' this trait and changes it to laying eggs.
 ## Why use Object Oriented Progaramming?
 The use of OOP is justified with many benefits.
 
-**Reusing code through Inheritance**
-
+## Code reuse
 Firstly, from one of the four pillars of OOP, inheritance, a lot of code gets to be reused, saving a lot of time in development. 
 Additionally, if for example we need to add or change a functionality in children classes of a single parent class; by applying the change to the parent class all of its inheritants will also be affected.
 Thus, by this simple relation, a lot extra work can be avoided.
 
-**Flexibility of code**
-
+## Flexibility of code
 Throught polymorphism, the objects can be reused and adapted, according to the use case. 
 This means that, the same library can be used in many different projects and can be fine-tuned to work perfectly for each instance.
 On many occasions, by using the same tried and tested code in different situations, can prove to be more time saving and less error prone, rather than rewriting the code from scratch
 
-**Easier troubleshooting**
-
+### Easier troubleshooting
 OOP promotes the creation of small and modular code, which makes it easier to troubleshoot errors in case something goes wrong. 
 Moreover, as promoted through encapsulation, additional functionality can be added to classes to handle errors, display messages or other helpful operations.
 
-**Intuitive structure**
-
+### Intuitive structure
 Object-Oriented Programming is more in line to the way humans see and interact with the world.
 Applying this higher-level approach to programming makes it easier to code and solve complicated problems.
 Code can be split into small chunks that can be solved, one at a time;
