@@ -23,10 +23,10 @@ def run_factory(*args):
     return bake_dough(make_dough(*args))
 
 
-#Create a function that acts as a UI for a user who wants to create naans
+# Create a function that acts as a UI for a user who wants to create naans
 def main():
     while True:
-        # ASsk for user choice to continue or exit
+        # Ask for user choice to continue or exit
         choice = input("Run factory? [y/n]")
         # Check user choice
         if choice.lower() in ['y', 'yes']:
