@@ -8,8 +8,8 @@
 
 ### *Day 02*
 - [Subject 02: User Input](s02-userinput)
-- [Subject 03: Data Types & Operators]()
-- [Subject 04: Data Collections]()
+- [Subject 03: Data Types & Operators](s03-datatypes-operators)
+- [Subject 04: Data Collections](s04-data-collections)
 
 
 ### *Day 03*
