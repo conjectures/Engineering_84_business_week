@@ -7,6 +7,8 @@
 - We will use pytest unit test in Python to implement TDD
 - TDD is widely used sand is the cheapest way to test the code or implement test deiven development.
 
+![TDD Diagram](TDD.png)
+
 **Best practices for TDD**
 - Write the smalles possible test case that mathces what we need to program
 - TDD cycle starts with everything failing: `RED`
@@ -86,4 +88,19 @@ test_unittest_simplecalc.py ....                                                
 
 ============================================ 4 passed in 0.03 seconds ============================================
 ```
+## Pytest and Unittest
+The module `pytest` looks for any file with a name that includes the pattern `test*.py`. It uses `unittest` to perform tests.
+We can use `unittest` directly with `python -m unittest discover -v`
+`pytest` offers a more readable form when using the flag `-v` for verbose:
+```bash
+$ python -m pytest -v
+[...]
+collected 4 items
 
+test_unittest_simplecalc.py::CalcTest::test_add PASSED                                                     [ 25%]
+test_unittest_simplecalc.py::CalcTest::test_divide PASSED                                                  [ 50%]
+test_unittest_simplecalc.py::CalcTest::test_multiply PASSED                                                [ 75%]
+test_unittest_simplecalc.py::CalcTest::test_subtract PASSED                                                [100%]
+
+============================================ 4 passed in 0.02 seconds ============================================
+```
