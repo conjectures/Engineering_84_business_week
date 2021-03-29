@@ -22,44 +22,43 @@ This exercise is going to bring together lots of concepts.
 ### Intalling and running
 To run the naan factory do the following:
 
-import naan_factory
-run_factory()
-TDD - test driven development
-write the test
-run it, and read the error
-code and make it pass the test
-this helps with:
+- Import naan_factory
+- run_factory()
+- Use TDD - test driven development
+- Write the test
+- Run it, and read the error
+- Code and make it pass the test
+
+This helps with:
 - Stop over engineering
 - Maintainable code
 - Reduce technical debt
 - Goes well with agile and working code
 - errors can be your guide in complex systems
 
-How it works is that we write unit tests.
+How it works: write unit tests.
 
 Unit Tests
 Test single pieces of code. Like a function.
 
-base of a test
+### Base of a test
 Usually has 3 phases.
-- setup phase (know variables)
-- calling of the function / piece of code with know variables
-- asserting for expect output
+- Setup phase (know variables)
+- Calling of the function / piece of code with know variables
+- Asserting for expect output
 
-User stories for Naan Factory
-#1
-As a user, I can use the make dough with 'water' and 'flour' to make 'dough'.
+## User stories for Naan Factory
+1. As a user, I can use the make dough with 'water' and 'flour' to make 'dough'.
+2. As a user, I can use the bake dough with 'dough' to get naan.
+3. As a user, I can use the run factory with water and flour and get naan.
 
-#2
-As a user, I can use the bake dough with dough to get naan.
+## Acceptance Criteria
+- You have written tests
+- Test pass
+- You have written more test to make sure everything works as indented
+- All user stories are satisfied
+- Code does not break
+- Code has exit condition
+- DOD if followed
 
-#3
-As a user, I can user the run factory with water and flour and get naan.
-Acceptance Criteria
-you have written tests
-test pass
-you have written more test to make sure everything works as indented
-all user stories are satisfied
-code does not break
-code has exit condition
-DOD if followed
+## Solution
