@@ -13,3 +13,8 @@ def read_and_print(filename):
         print('The above block was not executed')
     finally:
         print("Thank you")
+
+if __name__ == '__main__':
+    print("Printing order list")
+    filename = 'orders.txt'
+    read_and_print(filename)
