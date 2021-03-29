@@ -62,3 +62,18 @@ Usually has 3 phases.
 - DOD if followed
 
 ## Solution
+To solve this task using TDD, we look at the User Stories, and try to implement them with the test cases.
+First, the appropriate functions are created in the `naan_factory.py` file:
+```python
+make_dough(*args):
+  pass
+
+bake_dough(*args):
+  pass
+
+fun_factory(*args):
+  pass
+```
+Then, while importing the functions in the `test_naan_factory.py` file, we create a class from the `unittest`  module to test the different cases.
+
+
