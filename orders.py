@@ -12,4 +12,5 @@ except IOError:
 finally:
     print("Thank you")
 
-
+# task 1: read data and display it as a list
+# task 2: function to do the same job
