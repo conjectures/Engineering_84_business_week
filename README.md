@@ -27,6 +27,9 @@ except IOError:
 finally:
     print("Thank you")
 ```
+The above code will execute correctly even if the `orders.txt` file does not exist.
+We can try this by changing the filename to be opered to `orders01.txt` was not created yet.
+The except block will catch the error and print a message, instead of stopping execution.
 
 ## Note: IO with files using Python
 
@@ -42,3 +45,6 @@ finally:
 
 
 It is worth noting that the `+` operator can be used with
+
+## CRUD
+Stands for `create`, `read`, `update`, `delete`.
