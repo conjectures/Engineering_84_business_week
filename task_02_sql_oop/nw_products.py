@@ -39,10 +39,8 @@ class ConnectToTable():
 
 
     def _establish_connection(self):
-        server = "18.135.103.95"
-        database = "Northwind"
-        username = "SA"
-        password = "Passw0rd2018"
+        # read credentials from file
+
         db = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+password)
         return db
 
