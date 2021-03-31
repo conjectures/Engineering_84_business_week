@@ -1,8 +1,10 @@
 import pyodbc
+import re
 
 
 class ConnectToTable():
 
+    # Initialise database to connect to specific table in Northwind Database
     def __init__(self, table):
         db = self._establish_connection()
         self.cursor = db.cursor()
@@ -37,22 +39,41 @@ class ConnectToTable():
     def delete_record(self, item):
         pass
 
-
+    # Method that establishes connection with database
     def _establish_connection(self):
         # read credentials from file
+        creds = self._get_creds()
+        server = creds.get('server')
+        database = creds.get('database')
+        username = creds.get('username')
+        password = creds.get('password')
 
         db = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+password)
         return db
+
+    # Method reads credentials from file.
+    def _get_creds(self):
+        creds = {}
+        with open('credentials.txt', 'r') as file:
+            for line in file:
+                # print(line)
+                temp = line.strip('\n').split(':')
+                creds.update({temp[0]: temp[1].lstrip()})
+
+        return creds
+
 
 
 
 
 def main():
-    dbinstance = ConnectToTable(Products)
-    # dbinstance.create_table()
-    products = dbinstance.get_products()
-    if products:
-        print(f"Found {len(products)} products")
+
+    dbinstance = ConnectToTable('Products')
+    # # dbinstance.create_table()
+    # products = dbinstance.get_products()
+    # if products:
+    #     print(f"Found {len(products)} products")
+    print(f'Version: {dbinstance.get_db_version()}')
 
 
 
