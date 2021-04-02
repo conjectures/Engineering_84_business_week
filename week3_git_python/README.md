@@ -14,7 +14,7 @@
 
 ### *Day 03*
 - [Subject 05: Control Flow](s05-control-flow)
-- [Subject 06: Functions]()
+- [Subject 06: Functions](s06-functions)
 
 ### *Day 04*
 - [Subject 07: Object Oriented Programming in Python]()
