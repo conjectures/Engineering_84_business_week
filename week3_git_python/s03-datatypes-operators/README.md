@@ -11,8 +11,13 @@
 # Arithmetic
 +, -, *, /
 
+# Power
+2 ** 2
+# 4
+
 # Modulus - gives remainder of division
-%
+4 % 3
+# 1
 ```
 
 ## Comparison Operators
@@ -23,11 +28,31 @@
 - `<=` greater than or equal
 - `==` equal to 
 
+## Bit wise operators
+- `x << y`
+
+Return x bit shifted to the left by y places, similar to mutliplying x with `2**y`
+```
+5 << 3
+# 40
+```
+
+- `x >> y`
+Return x bit shifted to the right by y places, similar to dividing x with `2**y`
+```
+256 >> 3
+#32
+```
+- `x & y` : Bitwise AND
+- `x | y` : Bitwise OR
+- `~x` : Complement
+- `x ^ y` : Bitwise XOR
+
 
 
 # Strings and Casting
 
-`greetings = Hello World!`
+`greetings = "Hello World!"`
 
 Indexing in Python starts from 0
 ```python
@@ -37,6 +62,8 @@ Indexing in Python starts from 0
 ```
 Reverse indexing starts from `-1`
 ```python
+print(greetings[:-6])
+# Hello 
 print(greetings[-6:])
 # World!
 ```
