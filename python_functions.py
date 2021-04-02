@@ -8,7 +8,7 @@
 
 # Let's create a function named 'greetings'
 def greetings():
-    print('Welcom on board, user!')
+    print('Welcome on board, user!')
 
 
 # By running this file with python, the function will not execute, unless explicitly called.
