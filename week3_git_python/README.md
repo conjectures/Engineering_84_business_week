@@ -17,7 +17,7 @@
 - [Subject 06: Functions](s06-functions)
 
 ### *Day 04*
-- [Subject 07: Object Oriented Programming in Python]()
+- [Subject 07: Object Oriented Programming in Python](s07-oop-python)
 - [Subject 08: Python Packages]()
 
 ### *Day 05*
