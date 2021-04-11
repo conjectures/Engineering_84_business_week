@@ -18,7 +18,7 @@
 
 ### *Day 04*
 - [Subject 07: Object Oriented Programming in Python](s07-oop-python)
-- [Subject 08: Python Packages]()
+- [Subject 08: Python Packages](s08-packages)
 
 ### *Day 05*
 - [Week 1 Exercises]()
