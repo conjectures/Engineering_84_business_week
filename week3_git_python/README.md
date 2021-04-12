@@ -21,6 +21,6 @@
 - [Subject 08: Python Packages](s08-packages)
 
 ### *Day 05*
-- [Week 1 Exercises]()
+- [Exercises](s09-tasks01)
 
 
