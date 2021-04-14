@@ -12,6 +12,8 @@ Vagrant.configure("2") do |config|
     app.vm.box = "generic/ubuntu1604"
     app.vm.network "private_network", ip:"192.168.10.100"
     app.vm.synced_folder "app", "/home/vagrant/app"
+    # app.vm.provision "shell", inline: set_env({ DB_HOST: "mongodb://192.168.10.101:27017/posts" }), privileged: false
+    app.vm.provision "shell", inline: "echo \"export DB_HOST=mongodb://192.168.10.101:27017/posts\" >> /etc/profile.d/myvars.sh", run: "always"
     app.vm.provision "shell", path: "app/environment/provision.sh"
   end
 

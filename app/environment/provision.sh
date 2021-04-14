@@ -18,10 +18,9 @@ sudo apt install nodejs -y
 sudo npm install pm2 -g
 
 # Install app packages
-sudo npm install app/app
+sudo npm install /home/vagrant/app/app
+sudo node /home/vagrant/app/seed/seed.js
 
-# Add db environment vars
-export DB_HOST=192.168.10.101:27017
 # Run application
 npm start --prefix /home/vagrant/app/app
 
