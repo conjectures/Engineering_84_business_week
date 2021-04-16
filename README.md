@@ -162,3 +162,7 @@ Finally we start the database with `sudo service mongod start` and `systemctl en
 The above configurations were based on the tests that were provided in the `test` folder. To compile and run the tests, we use the `bundler` plugin for ruby.
 The tests are executed with the command `rake spec` inside the test folder.
 
+### Reverse Proxy with NGINX
+Defautl location for our nginx configuration file is `/etc/nginx`
+The available sites are listed under `/etc/nginx/sites-available` with the `default` available site being available at port 80.
+We can add our site in the `default` nginx site.
