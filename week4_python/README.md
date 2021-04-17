@@ -1,9 +1,10 @@
-Python Week 2
+# Python Week 2
 
 ## Lessons
 
 ### *Day 01*
-- [Subject : ??]()
+- [Subject 09: Test Driven Development](s09-tdd)
+- [Subject 10: Exceptions]()
 ### *Day 02*
 
 ### *Day 03*

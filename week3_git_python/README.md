@@ -1,4 +1,4 @@
-#Git & Python Week
+# Git & Python Week
 
 ## Lessons
 
@@ -21,6 +21,6 @@
 - [Subject 08: Python Packages](s08-packages)
 
 ### *Day 05*
-- [Exercises](s09-tasks01)
+- [Exercises](tasks)
 
 
