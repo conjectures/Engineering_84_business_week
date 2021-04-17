@@ -1,21 +1,27 @@
 # Python Test Driven Development
 
-## Why should we use TDD
-## What are the benefits of using TDD
+## What is Test Driven Development
+Test Driven Development is a software development process that involves writing tests that check certain functionality of the product, before writing the production code.
+After a unit test is added, the programmers write just the simplest code possible and trial it against the unit test. If the test passes successfully, another unit test can be added for other functionalities, otherwise the code should be refactored.
 
-### Best use cases
-- We will use pytest unit test in Python to implement TDD
-- TDD is widely used sand is the cheapest way to test the code or implement test deiven development.
+The purpose of TDD is to help developers think more clearly about the requirements of the product.
+Additionally, TDD has many benefits. It carries all the merits of iterative approaches, like reducing complexity, and is very well suited in Agile environments.
+Unit tests are also used for validation, making sure that future changes do not affect the performance of the end product.
+
+## TDD in Python
+To demonstrate TDD of software, we use Python and its in-built module `pytest`.
+
+### Test Driven Development life cycle
+1. Write a test case that matches program requirements.
+2. Run the tests. TDD cycles typically start with all test failing.
+3. Write the simplest code to pass a test.
+4. If the test does not succeed, refactor the code again until it passes the check.
+5. Repeat cycle until all the functionality of the product is completed.
 
 ![TDD Diagram](TDD.png)
 
-**Best practices for TDD**
-- Write the smalles possible test case that mathces what we need to program
-- TDD cycle starts with everything failing: `RED`
-- Write code to pass the test: `GREEN`
-- Refator the code for next test `Blue`
-- This continues untill all the tests have successfully passed
 
+### Methods used in Python test
 |Method |   Checks that|   New in |
 |:---|:---|:---|
 |assertEqual(a, b)        | a == b              ||
@@ -31,9 +37,13 @@
 |assertIsInstance(a, b)   |    isinstance(a, b)    |3.2|
 |assertNotIsInstance(a, b)|    not isinstance(a,b) |3.2|
 
-- Let's create a file called `test_unittest_simplecalc.py`
-- Naming convention is extremely important when it comes to testing in Python
+### TDD Example in Python
+Let's create a file called `test_unittest_simplecalc.py`.
 
+> Naming convention is extremely important when it comes to testing in Python. 
+> This is because the `pytest` module searches for files that start with `test` to compile the unit tests.
+
+In the file we have added the code seen below.
 ```python
 # Import unittest to inherit TestCase - use it to create tests against our code.
 import unittest
@@ -60,8 +70,11 @@ class CalcTest(unittest.TestCase):
         # Test if the value of 512/32 is equal to 16 when using calc.divide()
         self.assertEqual(self.calc.divide(512, 32), 16)
 ```
-Run python tests with `python -m pytest`. Evidently, the tests will fail.
+We can run the above tests with `python -m pytest`. Evidently, the tests will fail.
 We continue by writing the simplest code required for the tests to succeed.
+
+
+In a file named `simplecalc.py` we add the following functionality:
 ```python
 class SimpleCalc:
 
