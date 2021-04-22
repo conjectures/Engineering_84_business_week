@@ -48,9 +48,12 @@ This type of scaling refers to 'upgrading' the server where the application is h
 
 ## Architecture
 
-# ## One tier architecture
-# ## Two tier architecture
-# ## Three tier architecture
+### One tier architecture
+A single-tier application has all the layers, such as presentation, application and database in the same 'package'. This means that the application and database are on the same host. Single-tier applications are vulnerable and non-flexible. (stateful - complex replication)
+![Single Tier](one-tier-software-architecture.png)
+
+### Two tier architecture
+### Three tier architecture
 
 # AWS
 
