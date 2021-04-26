@@ -55,23 +55,43 @@ To create a subnet, first go to the VPC service, then navigate to the 'Subnets' 
 
 
 ## EC2
-To create an EC2 instance, we first need to go to the EC2 panel. From there we press the 'Create new Instance' button, and we are met with a number of settings we can choose:
-1. Image
 
-We first need to choose an AMI image for the EC2 instance. There are many 'blank' images that only include the operating system, but we can create our own AMI image in the future that includes custom installation of software we might need.
+To create an EC2 instance, we first need to go to choose the EC2 option from the AWS services panel.
+After choosing the EC2 option, we are presented with a summary panel for all the EC2 instances on the current *Region*. 
+At this point, we should switch to the *Region* we want, if it the correct one is not selected. 
+
+We can view a more detailed list of the EC2 instances by clicking the `Instances` option on the left-side panel, or by clicking the summary box for `Instances` or `Instances (running)`.
+Both options lead to the same page, but the latter option applies a filter to show only the *running* instances. 
+EC2 instances have several states (*running*, *stopped*, *pending*, *terminated*). They are being priced only when they are on a running state. 
+As EC2s instances are *Virtual Machines* on the cloud, they require some time to start running after we have provisioned them. During this time, they will be on a `pending` state.
+
+After they complete the provision stage, they will have a private IP for the subnet they are currently in (`default` VPC and subnet if not specified) and a public IP if it was requested.
+The EC2 public IP of the EC2 instance may change if it is rebooted, as AWS recycles public IPs when instances are stopped. We can have a specific IP if an **elastic IP** is associated with the instance.
+Private IPs do not change, as long as the EC2 instance exists. 
+
+From the *Instances* list, we press the orange button labeled `Create new Instance` to be directed to the EC2 instance creation wizard, where we have to choose the settings for the instance.
+
+1. Image
+Firstly we have to choose an image for the machine. 
+The image may contain only the baseline operating system, an operating system and a few programs installed, or it can be a custom image we created with all the programs we need on the OS of our choice.
+There are several images that are free-tier, including many Linux Ubuntu and Windows operating systems.
 
 2. Provisioning
 
-At this stage, we need to choose the capabilites of the instance. There is a free tier available for free 
+At this stage, we need to choose the capabilites of the instance. There is a free tier available with a lower CPU and memory capacity.
+We can choose that instance for testing purposes.
 
+3. Settings
 
-Image
-CPU Tier
-Settings
-Storage
-Tags
-Security Groups
-ss
+4. Storage
+5. Tags
+6. Security Groups
+7. Summary
+8. Key
+As a final step before the instance is launched, a pop-up menu is shown that asks us for the ssh key we would like to choose.
+We can create a new key from this menu and download it; or we can use an existing key pair
+
+As an added reminder, a tickbox is included that reminds us to check if the `ssh` key is available in our system.
 
 ## Connecting to Instance
 
