@@ -54,4 +54,25 @@ Security Groups is a collection of rules that control the inbound and outbound t
 Stateful filtering allows responses to go back out even if the outbound rules don't allow it. Stateless filtering will not allow for the responce to go through in the same scenario.
 Security groups are an example of a stateful filtering method, while NACLs are stateless.
 
+## Routing
+
+### Route Tables
+The **Route Tables** containe routes, that help direct traffic outside of the subnet IPs
+
+### Internet Gateway
+The **Internet Gateway** is a highliy available VPC component that allows communication between your VPC and the internet.
+
+### Ephemeral Port
+An **ephemeral prot** or **dynamic port** is a short-lived port number used by an Internet Protocol (IP) transport protocol. They are allocated automatically from a predefined range of IP stack soaftware.
+They can be used as the post assignement on the server end of a communication. Several file transfer file protocols continue communication on ephemeral ports with a client that initially connected to one of the server's well-known service listenintg ports.
+Different range of ports were suggested to be dynamic / ephemeral by different organisations or operating systems:
+| Organisation / OS | Dynamic Ports Range|
+|---|---|
+| Internet Assigned Numbers Authority (IANA) | `49152` - `65535`|
+| Linux Kernel | `32768`-`60999`|
+| BSD | `1024`-`5000`|
+| Windows XP | `1025`-`5000`
+| Windows 7, Server 2018 |  `49152` - `65535`|
+
+
 
