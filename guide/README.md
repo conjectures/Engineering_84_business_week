@@ -9,6 +9,7 @@ In this guide, we show how to create AWS resources with the online console provi
 - [Network ACL](#network-acl)
 - [Security Groups](#security-groups)
 - [EC2](#ec2)
+- [Connecting to Instances](#connecting-to-instance)
 - [Scenario](#scenario)
 
 ## VPC
@@ -50,6 +51,16 @@ To create a subnet, first go to the VPC service, then navigate to the 'Subnets' 
 ## Internet Gateway 
 ## Routing Tables
 ## Network ACL
+We need to give inbound and outbound rules for our NACL instance since they perform stateless filtering. The rule associated with them is used for the ordering of the rules.
+
+For example in this instance we create the following rules:
+NACL Inbound:
+- 100: Allows inbound HTTP traffic from IPV4 addresses.
+- 110: Allows inbound SSH traffic from network over the internet. We should let it 
+- 120: Allows inbound return traffic from hosts on the internet that are responding.
+NACL Outbound:
+- 100: allow prot 80
+- 110: allow cidr block 
 
 ## Security Groups
 
@@ -81,21 +92,86 @@ There are several images that are free-tier, including many Linux Ubuntu and Win
 At this stage, we need to choose the capabilites of the instance. There is a free tier available with a lower CPU and memory capacity.
 We can choose that instance for testing purposes.
 
-3. Settings
+3. Configure Instance
+
+In this part, we can specify the VPC of the instance, the subnet, availability zones and other settings. 
+We also need to enable the auto-assign for Public IP if the subnet settings don't specify it.
+With this setting, we will assing an IP to the instance so that we can connect to it with `ssh` or connect to the internet without a NAT Gateway.
+We don't need to change any other settings for this use case.
+![03. Configure Instance](media/ec2_settings03.png)
 
 4. Storage
+
+After we configure the VPC, we need to specify the amount of storage we would like to add. We can also attach other EBS volumes here that can persist or are shared between instances.
+
+![04. Storage](media/ec2_settings04.png)
+
 5. Tags
+
+By adding tags, we can label our instance with helpful information. Tags work as a key-value pair, so we need to add the name of the tag and its value.
+
+![05. Tags](media/ec2_settings05.png)
+
 6. Security Groups
+
+In this page, we can add security groups to our instance, or create new ones before adding them. If we have already configured the instance VPC, then only the security groups that are in that VPC will show up.
+![06. Security Groups](media/ec2_settings06.png)
+
 7. Summary
+
 8. Key
+
 As a final step before the instance is launched, a pop-up menu is shown that asks us for the ssh key we would like to choose.
 We can create a new key from this menu and download it; or we can use an existing key pair
 
 As an added reminder, a tickbox is included that reminds us to check if the `ssh` key is available in our system.
 
 ## Connecting to Instance
+In order to connect to the instance, we use the `ssh` command. 
+We need some information before we connect though. Firstly we will need to find the path to the `.pem` file that was chosen right before the instance was launched. This file is used for identification.
+We will also need the public IP of the instance we will connect to, and the default username. The IP can be found from the instance panel, while the username is based on the image used to launch the instance:
+|AMI|username|
+| ---| ---|
+| Amazon Linux 2| `ec2-user`|
+| Fedora | `ec2-user` or `fedora`|
+| RHEL | `ec2-user` or `root`|
+| CentOS | `cetnos`|
+| Debian | `admin`|
+| Ubuntu | `ubuntu`|
 
+For example, we can connect to an ubuntu instance with public IP address `54.299.125.222` with the below command:
+
+```bash
+ssh -i ~/.ssh/IdentityFile.pem ubuntu@54.299.125.222
+```
+When we connect to the instance for the first time, it will ask for confirmation, as our localhost hasn't connected to this device before and doesn't have it listed in the known hosts. 
+
+Additionally, we can forego adding the `-i` flag by registering it with the **ssh-agent**, or using an *ssh configuration file*. 
+For the first method, if we are using a Linux system, we can check if the `ssh-agent` is working by checking its PID. Alternatively, we can check for the identities that are registered already.
+```bash
+# check if the ssh agent process is running:
+echo $SSH_AGENT_PID
+
+# list ssh-agent registered identities
+ssh-add -L
+```
+If the agent is not running, we can start it with the following commands.
+```bash
+eval "$(ssh-agent -s)"
+```
+After we have established that he `ssh-agent` is running properly, we can add the `.pem` file required to identify us to the EC2 instance:
+```
+ssh-add ~/.ssh/IdentityFile.pem
+```
+We can then `ssh` in to the host we want by adding the username and IP:
+```bash
+
+```
+
+We use have to specify that file with the 
 ## Copying files
 We can copy files to our newly created EC2 instance with the `scp` command
 
 ## Scenario
+We need to create a 2 tier architecture VPC. The network needs to have 2 subnets, a private and a public network. We also need to add an Internet Gateway, NACL rules for both subnets, and Security Groups for application and database instances, according to their function.
+![AWS Deployment scenario](media/AWS_deployment_networking_security.png)
