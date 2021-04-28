@@ -173,5 +173,9 @@ We use have to specify that file with the
 We can copy files to our newly created EC2 instance with the `scp` command
 
 ## Scenario
+## 2 Tier
 We need to create a 2 tier architecture VPC. The network needs to have 2 subnets, a private and a public network. We also need to add an Internet Gateway, NACL rules for both subnets, and Security Groups for application and database instances, according to their function.
 ![AWS Deployment scenario](media/AWS_deployment_networking_security.png)
+
+### Bastion
+![Bastion](media/tier2_bastion.png)
