@@ -1,0 +1,8 @@
+# Vagrant files
+.vagrant
+
+# Node files
+package-lock.json
+
+# Log files
+*.log
