@@ -10,6 +10,8 @@ In this guide, we show how to create AWS resources with the online console provi
 - [Security Groups](#security-groups)
 - [EC2](#ec2)
 - [Connecting to Instances](#connecting-to-instance)
+- [Setting up AWS-CLI](#setting-up-aws-cli)
+- [S3](#s3)
 - [Scenario](#scenario)
 
 ## VPC
@@ -167,15 +169,68 @@ We can then `ssh` in to the host we want by adding the username and IP:
 ```bash
 
 ```
-
 We use have to specify that file with the 
+
+## Setting up AWS CLI
+The `awscli` is written in python, so we need to install it before setting it up.
+
 ## Copying files
 We can copy files to our newly created EC2 instance with the `scp` command
+We can install it on an Ubuntu system with `sudo apt`
+```
+sudo apt-get install awscli
+```
+Then, we can configure our credentials with the `aws configure` command.
+After running it, we will be prompted to enter the **AWS Access Key ID**, the **AWS Secret Access Key**, **Default region name** and **default output format** as additional setting.
+
+The credentials and settings are saved in the `~/.aws` directory inside the `credentials` and `config` files respectively.
+
+## S3
+
+### Create with AWS-CLI
+```bash
+aws s3 mb s3://unique-bucket-name
+```
+Underscores and capitals are not allowed for the naming convetnion of S3 buckets
+
+### Uploading Files
+The syntax of moving files in the bucket is 
+```
+# Move file to bucket
+aws s3 mv <source> <target> [-options]
+
+# Copy file to bucket
+aws s3 cp <source> <target> [-options]
+```
+### Downloading Files
+```
+# Using sync
+aws s3 sync <source>
+
+# Using cp
+```
+### Remove files
+```
+# Delete file in s3 bucket
+aws s3 rm s3://unique-bucket-name/example/filename.txt
+
+# Delete directory in s3 bucket
+aws s3 rm s3://unique-bucket-name/example --recursive
+```
+### Remove Bucket
+```
+aws s3 rb s3://unique-bucket-name
+```
+> Note: We can force delete the bucket with the `--force` flag. This will remove the bucket regardless of wether it is empty or not.
+
+### Permissions
+When we use the `sync` and `cp`, we can use the flag `--acl` to manage permissions.
 
 ## Scenario
-## 2 Tier
+### 2 Tier
 We need to create a 2 tier architecture VPC. The network needs to have 2 subnets, a private and a public network. We also need to add an Internet Gateway, NACL rules for both subnets, and Security Groups for application and database instances, according to their function.
 ![AWS Deployment scenario](media/AWS_deployment_networking_security.png)
+
 
 ### Bastion
 ![Bastion](media/tier2_bastion.png)

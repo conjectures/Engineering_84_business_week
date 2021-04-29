@@ -48,7 +48,10 @@ We can restrict access to traffic in subnets with the use of **Network ACL** rul
 Security Groups is a collection of rules that control the inbound and outbound traffic for our instances. Each EC2 instance has at least one security group attached that controls the traffic that is allowed to pass. 
 
 ### NACL
-**Network ACL** (**NACL**) control inbound and outbound traffic for subnets. They are an added layer of security, on top of *Security Groups*. As they are applied for an entire subnet, they can be used to set inbound or outbound rules for every instance included in the subnet.
+**Network ACL** (**NACL**) control inbound and outbound traffic for subnets. They are an added layer of security, on top of *Security Groups*.
+As they are applied for an entire subnet, they can be used to set inbound or outbound rules for every instance included in the subnet.
+NACL rules are associated with a rule number. This number is used to specify the order with which the rules are evaluated. 
+AWS recommends rule numbers to be added with increments of 10, so that if we need to add a specific rule in the future, we can have adequate slots to insert them.
 
 ### Stateful vs Stateless Filtering
 Stateful filtering allows responses to go back out even if the outbound rules don't allow it. Stateless filtering will not allow for the responce to go through in the same scenario.
@@ -74,5 +77,22 @@ Different range of ports were suggested to be dynamic / ephemeral by different o
 | Windows XP | `1025`-`5000`
 | Windows 7, Server 2018 |  `49152` - `65535`|
 
+## S3
+The **Simple Storage Service** (**S3**) is a storage solution provided by AWS.
+It can be used to backup and restore data, disaster recovery, archiving, or even host cloud-native applicatios.
+S3 offers a wide range of storage classes for different retrieval and storage frequencies. The classes are priced differently, so it is beneficial to be familiar with them in order to optimise costs:
+
+Additionally, S3 has no Region or Availability Zone requiremetns, as it is globally available.
+
+
+|S3 Class|Use case|
+|---|---|
+|Standard| General Purpose|
+|Intelligent-Tiering|Unknown or changing access|
+|Standard-IA| Infrequent access|
+|One Zone-IA| Infrequent, quick access on single availability zone|
+|Glacier|Archiving|
+|Glacier Deep Archive||
+|Outposts
 
 
