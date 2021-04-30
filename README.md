@@ -49,7 +49,19 @@ EOF
 - Automatically transfer files into live server on EC2
 
 ## Solution
-To create this pipeline, 3 Jenkins `Freestyle Projects` were created:
+To create this pipeline, 3 Jenkins 'Freestyle Projects' were created:
+
 ![jenkins jobs](media/jenkins_jobs.png)
+
+The first job, `eng84_alexis_test`,  is called vai a webhook from github, which is triggered when a push has occured on the `dev` branch of the project. 
+Next, the `dev` branch is cloned from github into a build environment and it is validated against the tests.
+If this job succeeds, it calls the job `eng84_alexis_merge`to start executing.
+
+In the merge job, the github `dev` branch is merged with the `main` branch.
+To achieve this, an `ssh` key had to be deployed to the github project, so that Jenkins has the credentials for administrative access.
+This allows Jenkins to merge the files.
+
+Finally, if the second job succeeds, the third job is triggered, where an `ssh` connection is established with the EC2 instance where the application is hosted.
+When the connection is established, the nesessary commands are executed to copy the newly edited files, then restart the `nodejs` application.
 
 
