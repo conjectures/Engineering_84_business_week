@@ -48,5 +48,8 @@ EOF
 - Trigger is set to successful merge and publish of code
 - Automatically transfer files into live server on EC2
 
-## Test commits
-- First test
+## Solution
+To create this pipeline, 3 Jenkins `Freestyle Projects` were created:
+![jenkins jobs](media/jenkins_jobs.png)
+
+
