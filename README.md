@@ -47,3 +47,6 @@ EOF
 - Is it's own job on Jenkins
 - Trigger is set to successful merge and publish of code
 - Automatically transfer files into live server on EC2
+
+## Test commits
+- First test
