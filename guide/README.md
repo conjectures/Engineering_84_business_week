@@ -12,6 +12,8 @@ In this guide, we show how to create AWS resources with the online console provi
 - [Connecting to Instances](#connecting-to-instance)
 - [Setting up AWS-CLI](#setting-up-aws-cli)
 - [S3](#s3)
+  -[S3 with aws-cli](#s3-with-awscli)
+  -[S3 with python](#s3-with-python)
 - [Scenario](#scenario)
 
 ## VPC
@@ -173,7 +175,13 @@ We use have to specify that file with the
 
 ## Setting up AWS CLI
 The `awscli` is written in python, so we need to install it before setting it up.
+We can install the `awscli` with the commands:
+```
+# Skip if python is already installed
+sudo apt-get install python3
 
+# Install awscli
+```
 ## Copying files
 We can copy files to our newly created EC2 instance with the `scp` command
 We can install it on an Ubuntu system with `sudo apt`
@@ -187,13 +195,21 @@ The credentials and settings are saved in the `~/.aws` directory inside the `cre
 
 ## S3
 
-### Create with AWS-CLI
+### S3 with awscli
+#### Installing AWS CLI
 ```bash
 aws s3 mb s3://unique-bucket-name
 ```
 Underscores and capitals are not allowed for the naming convetnion of S3 buckets
+#### Configuring Credentials
+To configure the credentials to our AWS account, we use the `aws configure` command.
+```bash
+aws configure
+```
+This will lead to 
 
-### Uploading Files
+
+#### Uploading Files
 The syntax of moving files in the bucket is 
 ```
 # Move file to bucket
@@ -202,14 +218,14 @@ aws s3 mv <source> <target> [-options]
 # Copy file to bucket
 aws s3 cp <source> <target> [-options]
 ```
-### Downloading Files
+#### Downloading Files
 ```
 # Using sync
 aws s3 sync <source>
 
 # Using cp
 ```
-### Remove files
+#### Remove files
 ```
 # Delete file in s3 bucket
 aws s3 rm s3://unique-bucket-name/example/filename.txt
@@ -217,14 +233,27 @@ aws s3 rm s3://unique-bucket-name/example/filename.txt
 # Delete directory in s3 bucket
 aws s3 rm s3://unique-bucket-name/example --recursive
 ```
-### Remove Bucket
+#### Remove Bucket
 ```
 aws s3 rb s3://unique-bucket-name
 ```
 > Note: We can force delete the bucket with the `--force` flag. This will remove the bucket regardless of wether it is empty or not.
 
-### Permissions
+#### Permissions
 When we use the `sync` and `cp`, we can use the flag `--acl` to manage permissions.
+
+### S3 with Python
+There are many python modules that can manage our S3 buckets. We will use `boto3` module that is available for `python3`.
+#### Installing `boto3`
+To use `boto3`, we first need to install it via `pip`:
+```bash
+pip install boto3
+```
+> The latest development version can be found on [Github](https://github.com/boto/boto3)
+#### Configuration
+Before we use the module, we need to set up authentication credentials for our AWS account. We can do that with the AWS CLI, as shown [here](#configuring-credentials)
+
+
 
 ## Scenario
 ### 2 Tier
@@ -232,5 +261,12 @@ We need to create a 2 tier architecture VPC. The network needs to have 2 subnets
 ![AWS Deployment scenario](media/AWS_deployment_networking_security.png)
 
 
-### Bastion
+### Bastion Server
+A **bastion** or **Jump Host** is a server that is used to connect to other servers in the same network.
+They are used as an added security feature, as we can create Security Groups to restrict `ssh` connections to specific IPs.
+As bastion servers are in the same VPC with the other servers, we can allow `ssh` in each server's security group with the internal IP of the bastion host. 
+Then, we only need to add the external IPs to the bastion server, and we only need to manage them on one location.
+This practice is very convenient in case we have a lot of servers that need to be isolated from the internet, or we need to have `ssh` access to them in a secure way.
+
 ![Bastion](media/tier2_bastion.png)
+
