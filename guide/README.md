@@ -253,6 +253,49 @@ pip install boto3
 #### Configuration
 Before we use the module, we need to set up authentication credentials for our AWS account. We can do that with the AWS CLI, as shown [here](#configuring-credentials)
 
+#### boto3 Client, Resource and Session
+The `boto3` module has different abstractions for making AWS service requests.
+
+##### Client:
+- Original `boto3` API abstraction
+- Provides low-level AWES service access
+- All AWS service operations are supported by clients
+- Exposes bootcore client to the developer
+- Typiaclly maps 1:1 with AWS service API
+- Snake-cased method names
+- Generated from AWS service description
+
+##### Resource:
+- Newer `boto3` API abstraction
+- Provides high-level, object-oriented API
+- Does not provide 100% API coverage of AWS services
+- Uses Identifiers and attributes
+- Exposes subresources and collections of AWS resources
+- Generated from resource description
+
+##### Session:
+- Stores configuration information (Primarily credentials and selected region)
+- Allows you to create service clients and resources
+- boto3 creates a default session for you when needed.
+
+So in other words, the `Session` abstraction is where to initiate the connectivity to AWS services. The `default` session uses the default credentials profile (~/.aws/credentials)
+#### Using `boto3`
+For the `boto3` module to be used, it first needs to be imported, and then the resource to be used needs to be specified:
+```python
+import boto3
+
+# To use Amazon S3
+s3 = boto3.resource('s3')
+```
+The `s3` resource will now 'contain' all of our buckets:
+```python
+for bucket in s3.buckets.all():
+    print(bucket.name)
+
+```
+
+We can create a bucket with the `create_bucket` command
+
 
 
 ## Scenario
