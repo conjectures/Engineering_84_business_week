@@ -33,6 +33,25 @@ At this point we can push the commit to our remote server, or we can follow the 
 
 
 ## Resetting
+### Resetting Unstaged Changes
+We can easily revert our changes with two commands,the `git clean` and the `git checkout` command. The first command removes untracked files from the working tree,
+while the latter will create a 'temporary' branch to track our change, therefore removing it from our stack. The branch is not 'saved' and so the changes are lost.
+
+We can view the files that will be removed from the stack with the `git clean` command with the `-n` flag:
+```bash
+# Show files to be removed
+git clean -n
+```
+Then we can use the two commands to remove the files:
+```bash
+# Remove untracked files
+git clean -f
+
+# Remove untracked changes to tracked files
+git checkout -- <file>
+# Remove untracked changes from all tracked files (in current dir)
+git checkout -- .
+```
 ### Reseting Stage Area
 
 There may be a point where we made a wrong addition to our staging area. We can remove a single file from being tracked, or reset the whole staging.
