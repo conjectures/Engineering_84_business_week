@@ -9,7 +9,9 @@ In this guide, we show how to create AWS resources with the online console provi
 - [Network ACL](#network-acl)
 - [Security Groups](#security-groups)
 - [EC2](#ec2)
-- [Connecting to Instances](#connecting-to-instance)
+  - [Connecting to EC2](#connecting-to-EC2)
+  - [Copying files to EC2](#copying-files-to-EC2)
+
 - [Setting up AWS-CLI](#setting-up-aws-cli)
 - [S3](#s3)
   -[S3 with aws-cli](#s3-with-awscli)
@@ -130,7 +132,7 @@ We can create a new key from this menu and download it; or we can use an existin
 
 As an added reminder, a tickbox is included that reminds us to check if the `ssh` key is available in our system.
 
-## Connecting to Instance
+### Connecting to EC2
 In order to connect to the instance, we use the `ssh` command. 
 We need some information before we connect though. Firstly we will need to find the path to the `.pem` file that was chosen right before the instance was launched. This file is used for identification.
 We will also need the public IP of the instance we will connect to, and the default username. The IP can be found from the instance panel, while the username is based on the image used to launch the instance:
@@ -169,45 +171,54 @@ ssh-add ~/.ssh/IdentityFile.pem
 ```
 We can then `ssh` in to the host we want by adding the username and IP:
 ```bash
-
+ssh ubuntu@<IP>
 ```
-We use have to specify that file with the 
+### Copying files to EC2
+We can copy files to our newly created EC2 instance with the `scp` command
 
 ## Setting up AWS CLI
 The `awscli` is written in python, so we need to install it before setting it up.
-We can install the `awscli` with the commands:
+### Installing
+We can install the `awscli` with `sudo apt` on Ubuntu instances:
 ```
 # Skip if python is already installed
 sudo apt-get install python3
 
 # Install awscli
-```
-## Copying files
-We can copy files to our newly created EC2 instance with the `scp` command
-We can install it on an Ubuntu system with `sudo apt`
-```
 sudo apt-get install awscli
 ```
-Then, we can configure our credentials with the `aws configure` command.
+#### Configuring Credentials
+We can configure our credentials with the `aws configure` command.
+```bash
+aws configure
+```
 After running it, we will be prompted to enter the **AWS Access Key ID**, the **AWS Secret Access Key**, **Default region name** and **default output format** as additional setting.
 
 The credentials and settings are saved in the `~/.aws` directory inside the `credentials` and `config` files respectively.
+This will lead to a command-line interface menu where you are asked to insert the credentials for your AWS username, or IAM role.
+Alternatively, the credentials can be added in the appropriate file directly:
+```bash
+# ~/.aws/credentials
+[default]
+aws_access_key_id = YOUR_KEY
+aws_secret_access_key = YOUR_SECRET
+```
+We can also set up or modify the some settings for the AWS CLI by editing the `~/.aws/config` file:
+```bash
+# ~/.aws/config
+[default]
+region=eu-west-2
+```
+The `[default]` section signifies that the following configurations and credentials are related to the default settings used by the AWS CLI.
+
 
 ## S3
 
 ### S3 with awscli
-#### Installing AWS CLI
 ```bash
 aws s3 mb s3://unique-bucket-name
 ```
 Underscores and capitals are not allowed for the naming convetnion of S3 buckets
-#### Configuring Credentials
-To configure the credentials to our AWS account, we use the `aws configure` command.
-```bash
-aws configure
-```
-This will lead to 
-
 
 #### Uploading Files
 The syntax of moving files in the bucket is 
@@ -241,6 +252,8 @@ aws s3 rb s3://unique-bucket-name
 
 #### Permissions
 When we use the `sync` and `cp`, we can use the flag `--acl` to manage permissions.
+
+
 
 ### S3 with Python
 There are many python modules that can manage our S3 buckets. We will use `boto3` module that is available for `python3`.
@@ -278,7 +291,8 @@ The `boto3` module has different abstractions for making AWS service requests.
 - Allows you to create service clients and resources
 - boto3 creates a default session for you when needed.
 
-So in other words, the `Session` abstraction is where to initiate the connectivity to AWS services. The `default` session uses the default credentials profile (~/.aws/credentials)
+So in other words, the *Session* abstraction is where to initiate the connectivity to AWS services. The `default` session uses the default credentials profile (~/.aws/credentials)
+The *Client* and *Resource* abstractions are used for the same purpose, although the client method is lower level and is not polished as much.
 
 #### Using `boto3`
 For the `boto3` module to be used, it first needs to be imported, and then the resource to be used needs to be specified:
@@ -294,8 +308,12 @@ for bucket in s3.buckets.all():
     print(bucket.name)
 
 ```
-
-We can create a bucket with the `create_bucket` command
+We can create a bucket with the `create_bucket` command :
+```
+s3.create_bucket(Bucket="<bucket-name>")
+```
+We can optionally add the location we want to the bucket
+Next, we can upload a file with the 
 
 
 
