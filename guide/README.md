@@ -279,6 +279,7 @@ The `boto3` module has different abstractions for making AWS service requests.
 - boto3 creates a default session for you when needed.
 
 So in other words, the `Session` abstraction is where to initiate the connectivity to AWS services. The `default` session uses the default credentials profile (~/.aws/credentials)
+
 #### Using `boto3`
 For the `boto3` module to be used, it first needs to be imported, and then the resource to be used needs to be specified:
 ```python
@@ -312,4 +313,6 @@ Then, we only need to add the external IPs to the bastion server, and we only ne
 This practice is very convenient in case we have a lot of servers that need to be isolated from the internet, or we need to have `ssh` access to them in a secure way.
 
 ![Bastion](media/tier2_bastion.png)
+
+
 
