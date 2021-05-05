@@ -9,5 +9,5 @@ sudo apt-get install ansible python3 python3-pip -y
 pip3 install boto boto3
 
 # Ansible file structure
-# ansible-vault create pass.yaml
+mkdir -r /etc/ansible/groups_vars/all
 
