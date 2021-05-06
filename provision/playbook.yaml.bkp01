@@ -1,0 +1,49 @@
+# AWS playbook
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+    aws_access_key: "{{aws_access_key}}"
+    aws_secret_key: "{{aws_secret_key}}"
+    region: eu-west-1
+    image: ami-0110a207d45daf145
+    key_name: eng84devops
+    id: "eng84_alexis"
+  
+  tasks:
+    - name: Facts
+      block:
+        - name: Get instances facts
+          ec2_instance_facts:
+            aws_access_key: "{{aws_access_key}}"
+            aws_secret_key: "{{aws_secret_key}}"
+            region: "{{region}}"
+          register: result
+
+          # - name: Instances ID
+          #   debug:
+          #     msg: "ID: {{item.instance_id}} - State: {{item.state.name}} - Public DNS {{ item.public_dns_name }}"
+          #   loop: "{{ result.instances }}"
+
+      tags: always
+
+    - name: Provisioning EC2 instances
+      block:
+        - name: Provision instances
+          ec2:
+            aws_access_key: "{{aws_access_key}}"
+            aws_secret_key: "{{aws_secret_key}}"
+            key_name: "{{key_name}}"
+            image: "{{image}}"
+            instance_type: t2.micro
+            region: "{{ region }}"
+            # identifier for this instance of set of instances so that module will be idempotent with respect to ec2 instances
+            # id:
+            id: "{{id}}"
+            # wait for instance to reach desired state before returning
+            wait: true
+
+
+

@@ -1,0 +1,86 @@
+# AWS Playbook
+---
+- name: Creating EC2 Instances
+  hosts: localhost
+  connection: local
+  vars_files:
+    - group_vars/all/pass.yaml
+  gather_facts: false
+
+  tasks:
+    - name: Get Info Block
+      block:
+        - name: Print debug info
+          debug: msg="{{aws_access_key}}"
+
+      tags: ['always', 'getinfoonly']
+
+    - name: Provisioning Instances
+      block:
+        - name: Provision controller
+          tags: create_ec2
+          ec2:
+            region: eu-west-1
+            key_name: eng84devops
+            aws_access_key: "{{aws_access_key}}"
+            aws_secret_key: "{{aws_secret_key}}"
+            # group:
+            instance_type: t2.micro
+            image: ami-038d7b856fe7557b3
+            wait: yes
+            wait_timeout: 500
+            count: 1
+            instance_tags:
+              Name: eng84_alexis_controller
+              os: ubuntu
+            monitoring: no
+            vpc_subnet_id: subnet-02c6d569a098d5e79
+            assign_public_ip: yes
+          register: ec2
+          delegate_to: localhost
+
+        - name: Provision application server 
+          tags: create_ec2
+          ec2:
+            region: eu-west-1
+            key_name: eng84devops
+            aws_access_key: "{{aws_access_key}}"
+            aws_secret_key: "{{aws_secret_key}}"
+            # group:
+            instance_type: t2.micro
+            image: ami-038d7b856fe7557b3
+            wait: yes
+            wait_timeout: 500
+            count: 1
+            instance_tags:
+              Name: eng84_alexis_application
+              os: ubuntu
+            monitoring: no
+            vpc_subnet_id: subnet-02c6d569a098d5e79
+            assign_public_ip: yes
+          register: ec2
+          delegate_to: localhost
+
+        - name: Provision application server 
+          tags: create_ec2
+          ec2:
+            region: eu-west-1
+            key_name: eng84devops
+            aws_access_key: "{{aws_access_key}}"
+            aws_secret_key: "{{aws_secret_key}}"
+            # group:
+            instance_type: t2.micro
+            image: ami-038d7b856fe7557b3
+            wait: yes
+            wait_timeout: 500
+            count: 1
+            instance_tags:
+              Name: eng84_alexis_database
+              os: ubuntu
+            monitoring: no
+            vpc_subnet_id: subnet-02c6d569a098d5e79
+            assign_public_ip: yes
+          register: ec2
+          delegate_to: localhost
+
+      tags: ['never', 'ec2-create']
