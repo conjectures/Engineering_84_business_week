@@ -31,6 +31,7 @@
             wait: yes
             wait_timeout: 500
             count: 1
+            private_ip: "{{item.private_ip}}"
             instance_tags:
               Name: "{{item.name}}"
               os: ubuntu
@@ -42,9 +43,9 @@
           register: ec2
           delegate_to: localhost
           loop:
-            # - { name: 'eng84_alexis_controller', groups: 'control' }
-            - { name: 'eng84_alexis_application', groups: 'application' }
-            - { name: 'eng84_alexis_database', groups: 'database' }
+            - { name: 'eng84_alexis_controller', groups: 'control' , private_ip: '10.0.1.5'}
+            - { name: 'eng84_alexis_application', groups: 'application' , private_ip: '10.0.1.6'}
+            - { name: 'eng84_alexis_database', groups: 'database' , private_ip: '10.0.1.7'}
           register: ec2
       tags: ['never', 'ec2-create']
 
@@ -55,60 +56,55 @@
       loop: "{{ec2.results}}"
       tags: ['never', 'ec2-create']
 
-      #     - name: Add EC2 to Host key to known hosts
-      #       connection: local
-      #       shell: "ssh-keyscan -H {{item}} >> ~/.ssh/known_hosts"
-      #       loop:
-      #         # - control
-      #         - application
-      #         - database
-      #       tags: ['never', 'ec2-create', 'ec2']
+    - name: Wait for SSH to come up
+      local_action:
+        module: wait_for
+        host: "{{item.instances[0].public_ip}}"
+        port: 22
+        delay: 10
+        timeout: 120
+      loop: "{{ec2.results}}"
+      tags: ['never', 'ec2-create', 'ec2']
 
-- name: Configure Database 
-  hosts: application
+    - name: Add Controller key to known hosts
+      connection: local
+      shell: "ssh-keyscan -H {{groups.control}} >> ~/.ssh/known_hosts"
+      tags: ['never', 'ec2-create', 'ec2']
+
+
+- name: Configure Controller
+  hosts: control 
   gather_facts: true
   become: true
   remote_user: ubuntu
   tasks:
-
-    - name: Synchronise files between controller and agents
+    - name: Synchronise files between controller database
       ansible.posix.synchronize:
-        src: /home/vagrant/application/environment/db
+        src: /home/vagrant/controller
         dest: /home/ubuntu/
-      # delegate_to: control
-      tags: ['never', 'ec2-configure']
+      tags: ['never', 'ec2-controller', 'ec2-database']
 
-    - name: run provision file 
-      shell: db/provision.sh >> somelog.txt
-      tags: ['never', 'ec2-configure']
+    - name: Synchronise files between controller database
+      ansible.posix.synchronize:
+        src: /home/vagrant/application
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-controller', 'ec2-database']
 
-
-- name: Configure App
-  hosts: application
+- name: Set up SSH Agent forwarding
+  hosts: localhost
   gather_facts: true
   become: true
-  remote_user: ubuntu
+  vars:
+    controller_host: "{{ groups.control }}"
   tasks:
-    - name: Synchronise environment files
-      ansible.posix.synchronize:
-        src: /home/vagrant/application/environment/app
-        dest: /home/ubuntu
-      # delegate_to: control
-      tags: ['never', 'ec2-configure']
+    - name: set up config file
+      copy:
+        dest: "/.ssh/config"
+        content: |
+          Host {{controller_host}}
+            ForwardAgent yes
 
-    - name: Synchronise app files
-      ansible.posix.synchronize:
-        src: /home/vagrant/application/app
-        dest: /home/ubuntu
-      # delegate_to: control
-      tags: ['never', 'ec2-configure']
-
-    - name: run provision file 
-      shell: app/provision.sh >> somelog.txt
-      tags: ['never', 'ec2-configure']
-
-      #     - name: install packages
-      #       apt: pkg=nginx state=present
-      #       delegate_to: application
+      #     - name: run provision file 
+      #       shell: db_env/provision.sh 
       #       tags: ['never', 'ec2-configure']
-
+      #

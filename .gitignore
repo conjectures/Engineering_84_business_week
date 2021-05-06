@@ -4,3 +4,6 @@
 
 # Secrets
 pass.yaml
+# Backups
+bkp/
+*.bkp

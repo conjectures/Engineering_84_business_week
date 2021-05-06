@@ -1,0 +1,55 @@
+# AWS Playbook
+---
+- name: Configure Database 
+  hosts: database
+  gather_facts: true
+  become: true
+  remote_user: ubuntu
+  tasks:
+    - name: Synchronise files between controller database
+      ansible.posix.synchronize:
+        src: /home/vagrant/application/environment/db_env
+        dest: /home/ubuntu/
+      delegate_to: application 
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+    - name: run provision file 
+      shell: db_env/provision.sh 
+      tags: ['never', 'ec2-configure']
+
+
+- name: Configure App
+  hosts: application
+  gather_facts: true
+  become: true
+  remote_user: ubuntu
+  tasks:
+
+    - name: Rsync provision script to application server
+      ansible.posix.synchronize:
+        src: /home/vagrant/application/environment/app_env
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-configure', 'ec2-application']
+
+    - name: run provision file
+      command: /bin/sh "/home/ubuntu/app_env/provision.sh"
+      tags: ['never', 'ec2-configure', 'ec2-application']
+
+    - name: Rsync provision script to application server
+      ansible.posix.synchronize:
+        src: /home/vagrant/application/app
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-configure']
+
+    - name: Execute
+      command: /bin/sh "run_app.sh"
+      shell: |
+        killall npm
+        killall nodejs
+        npm install /home/ubuntu/app
+        nodejs /home/ubuntu/app/seed/seed.js
+        npm start --prefix /home/ubuntu/app &
+      environment:
+        DB_HOST: "mongodb://10.0.1.7:27017/posts"
+      tags: ['never', 'ec2-configure']
+
