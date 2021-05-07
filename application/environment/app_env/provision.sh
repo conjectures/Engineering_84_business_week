@@ -28,6 +28,16 @@ sudo cp /home/ubuntu/app_env/nginx.default /etc/nginx/sites-available/default
 sudo service nginx restart
 
 # kill npm process
+killall npm
+killall nodejs
+
+export DB_HOST=mongod://10.0.1.13:27017/posts
+
+sudo npm install /home/ubuntu/app
+sudo node /home/ubuntu/app/seed/seed.js
+
+npm start --prefix /home/ubuntu/app &
+
 # env variable - $DB_HOST
 # npm install
 # nodejs seed.js

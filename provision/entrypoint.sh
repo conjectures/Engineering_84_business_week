@@ -11,7 +11,7 @@ pip3 install boto boto3
 # Ansible file structure
 mkdir -p /etc/ansible/group_vars/all
 sudo cp /home/vagrant/provision/pass.yaml /etc/ansible/group_vars/all/
-sudo cp /home/vagrant/provision/playbook.yaml /etc/ansible/
+sudo cp /home/vagrant/provision/provision_playbook.yaml /etc/ansible/
 
 #ansible-playbook /etc/ansible/playbook.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 ansible-galaxy collection install ansible.posix

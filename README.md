@@ -8,6 +8,11 @@ Node app has to work with public IP and db working with `/posts`
 ## Solution
 ### Architecture
 In this task, we are using a Vagrant VM as a controller, which spins up two EC2 instances on AWS as agents.
+![Architecture](media/ansible_architecture.jpg)
+
+### Networking
+The netwoprking is done *ad-hoc*.
+Firstly, we bring up a local controller using vagrant. 
 
 ### Provision
 ### Configuration

@@ -82,28 +82,38 @@
       ansible.posix.synchronize:
         src: /home/vagrant/controller
         dest: /home/ubuntu/
-      tags: ['never', 'ec2-controller', 'ec2-database']
+      tags: ['never', 'ec2-controller' ]
 
     - name: Synchronise files between controller database
       ansible.posix.synchronize:
         src: /home/vagrant/application
         dest: /home/ubuntu/
-      tags: ['never', 'ec2-controller', 'ec2-database']
+      tags: ['never', 'ec2-controller']
 
 - name: Set up SSH Agent forwarding
   hosts: localhost
   gather_facts: true
   become: true
   vars:
-    controller_host: "{{ groups.control }}"
+    controller_host: "{{ groups.control[0] }}"
   tasks:
-    - name: set up config file
+    - name: make config file
       copy:
-        dest: "/.ssh/config"
-        content: |
-          Host {{controller_host}}
-            ForwardAgent yes
+        src: /home/vagrant/provision/config
+        dest: /home/vagrant/.ssh
+      tags: ['never', 'ec2-controller']
 
+    - name: add host to config
+      ansible.builtin.lineinfile:
+        path: /home/vagrant/.ssh/config
+        line: "  HostName {{controller_host}}"
+        insertbefore: ^\W{2}User
+      tags: ['never', 'ec2-controller']
+
+
+      #     Run provision file that runs ansible playbook on controller with ssh port forwarding?
+      #
+      #
       #     - name: run provision file 
       #       shell: db_env/provision.sh 
       #       tags: ['never', 'ec2-configure']
