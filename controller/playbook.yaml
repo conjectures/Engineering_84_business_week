@@ -38,6 +38,7 @@
         dest: /home/ubuntu/
       tags: ['never', 'ec2-configure', 'ec2-application']
 
-    - name: run provision file
-      command: /bin/sh "/home/ubuntu/app_env/provision.sh"
-      tags: ['never', 'ec2-configure', 'ec2-application']
+
+      #     - name: run provision file
+      #       command: /bin/sh "source /home/ubuntu/app_env/provision.sh"
+      #       tags: ['never', 'ec2-configure', 'ec2-application']

@@ -1,14 +1,11 @@
-#!/bin/bash
+#! /bin/bash
 
 # Update the sources list
 sudo apt-get update -y
 
-# upgrade any packages available
 sudo apt-get upgrade -y
-
-
 # install git
-sudo apt-get install git -y
+in sudo apt-get install git -y
 
 # install nodejs
 sudo apt-get install python-software-properties -y
@@ -28,15 +25,30 @@ sudo cp /home/ubuntu/app_env/nginx.default /etc/nginx/sites-available/default
 sudo service nginx restart
 
 # kill npm process
-killall npm
-killall nodejs
 
-export DB_HOST=mongod://10.0.1.13:27017/posts
+# source environment variables
+#eval "$(./env_vars.sh)"
+# no login
+echo "export DB_HOST=mongodb://10.0.1.13:27017/posts" >> /home/ubuntu/.bashrc
+. $HOME/.bashrc
+# with login
+echo "export DB_HOST=mongodb://10.0.1.13:27017/posts" >> /home/ubuntu/.profile
+. $HOME/.profile
 
-sudo npm install /home/ubuntu/app
-sudo node /home/ubuntu/app/seed/seed.js
+chmod +x /home/ubuntu/app/app.js
 
-npm start --prefix /home/ubuntu/app &
+cd /home/ubuntu/app/
+
+sudo npm install 
+sudo node /app/seed/seed.js
+
+npm install --production
+npm prune --production
+echo -e "\nApp deployed!\n\n"
+npm start &
+
+# 
+# npm start --prefix /home/ubuntu/app &
 
 # env variable - $DB_HOST
 # npm install

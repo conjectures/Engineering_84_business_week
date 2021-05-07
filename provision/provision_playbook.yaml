@@ -43,9 +43,9 @@
           register: ec2
           delegate_to: localhost
           loop:
-            - { name: 'eng84_alexis_controller', groups: 'control' , private_ip: '10.0.1.5'}
-            - { name: 'eng84_alexis_application', groups: 'application' , private_ip: '10.0.1.6'}
-            - { name: 'eng84_alexis_database', groups: 'database' , private_ip: '10.0.1.7'}
+            - { name: 'eng84_alexis_controller', groups: 'control' , private_ip: '10.0.1.11'}
+            - { name: 'eng84_alexis_application', groups: 'application' , private_ip: '10.0.1.12'}
+            - { name: 'eng84_alexis_database', groups: 'database' , private_ip: '10.0.1.13'}
           register: ec2
       tags: ['never', 'ec2-create']
 
@@ -73,7 +73,7 @@
 
 
 - name: Configure Controller
-  hosts: control 
+  hosts: control
   gather_facts: true
   become: true
   remote_user: ubuntu
@@ -109,6 +109,10 @@
         line: "  HostName {{controller_host}}"
         insertbefore: ^\W{2}User
       tags: ['never', 'ec2-controller']
+
+      #     - name: execute connection shell
+      #       command: /bin/bash "/home/vagrant/provision/connection.sh"
+      #       tags: ['never', 'ec2-controller', 'ec2-connection']
 
 
       #     Run provision file that runs ansible playbook on controller with ssh port forwarding?
