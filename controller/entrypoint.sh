@@ -24,8 +24,8 @@ export AWS_REGION=eu-west-1
 ansible-playbook /etc/ansible/playbook.yaml -t ec2-configure
 
 # Call deployment shell
-echo -e "\nConnecting to application server...\n\n"
-ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.12 '. $HOME/app_env/provision.sh'
+# echo -e "\nConnecting to application server...\n\n"
+# ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.12 '. $HOME/app_env/provision.sh'
 
 # . .$HOME/controller/deploy.sh
 #Call ansible

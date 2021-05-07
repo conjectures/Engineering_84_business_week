@@ -5,7 +5,7 @@ sudo apt-get update -y
 
 sudo apt-get upgrade -y
 # install git
-in sudo apt-get install git -y
+#sudo apt-get install git -y
 
 # install nodejs
 sudo apt-get install python-software-properties -y

@@ -1,5 +1,6 @@
 #! /bin/bash
 
+sudo rm -f /home/vagrant/.ssh/config
 echo "$1 " > /tmp/vault_pass
 
 ansible-playbook /etc/ansible/provision_playbook.yaml \
@@ -7,9 +8,8 @@ ansible-playbook /etc/ansible/provision_playbook.yaml \
     -e "ansible_python_interpreter=/usr/bin/python3" \
     -t ec2-create,ec2-controller
 
-echo -e "\nSSH Infon\n"
+echo -e "\nSSH Debug\n"
 
-ls /home/vagrant/.ssh
 cat /home/vagrant/.ssh/config
 
 echo -e "\nConnecting to controller...\n\n"

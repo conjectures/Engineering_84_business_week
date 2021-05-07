@@ -100,7 +100,7 @@
     - name: make config file
       copy:
         src: /home/vagrant/provision/config
-        dest: /home/vagrant/.ssh
+        dest: /home/vagrant/.ssh/
       tags: ['never', 'ec2-controller']
 
     - name: add host to config
