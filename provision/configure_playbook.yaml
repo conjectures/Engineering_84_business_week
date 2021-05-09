@@ -1,0 +1,66 @@
+- name: Configure Controller
+  hosts: control
+  gather_facts: true
+  become: true
+  remote_user: ubuntu
+  tasks:
+    - name: Rsync configuration files to controller
+      ansible.posix.synchronize:
+        src: /home/vagrant/controller
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-controller', 'ec2']
+
+    - name: Rsync application files to controller
+      ansible.posix.synchronize:
+        src: /home/vagrant/application
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-controller', 'ec2']
+
+- name: Set up SSH Agent forwarding
+  hosts: localhost
+  gather_facts: true
+  become: true
+  vars:
+    controller_host: "{{ groups.control[0] }}"
+    application_host: "{{ groups.application[0] }}"
+  tasks:
+
+    - name: Remove old ssh config
+      file:
+        state: absent
+        path: /home/vagrant/.ssh/config
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+    - name: Setup ssh config 
+      copy:
+        src: /home/vagrant/provision/config
+        dest: /home/vagrant/.ssh/config
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+    - name: Add host ip to config
+      ansible.builtin.lineinfile:
+        path: /home/vagrant/.ssh/config
+        line: "  HostName {{controller_host}}"
+        insertbefore: ^\W{2}User
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+    - name: Save application server IP
+      shell: |
+        echo -e "Application found at:\n{{ application_host }}" > /home/vagrant/myhosts.txt
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+
+
+
+      #     - name: execute connection shell
+      #       command: /bin/bash "/home/vagrant/provision/connection.sh"
+      #       tags: ['never', 'ec2-controller', 'ec2-connection']
+
+
+      #     Run provision file that runs ansible playbook on controller with ssh port forwarding?
+      #
+      #
+      #     - name: run provision file 
+      #       shell: db_env/provision.sh 
+      #       tags: ['never', 'ec2-configure']
+      #

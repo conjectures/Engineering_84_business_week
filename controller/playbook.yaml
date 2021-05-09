@@ -12,10 +12,37 @@
         dest: /home/ubuntu/
       tags: ['never', 'ec2-configure', 'ec2-database']
 
-    - name: run provision file
-      command: /bin/sh "/home/ubuntu/db_env/provision.sh"
+    - name: install mongodb
+      apt:
+        update_cache: yes
+        name: mongodb
+        state: present
       tags: ['never', 'ec2-configure', 'ec2-database']
 
+    - name: copy configuration file
+      shell: |
+        rm /etc/mongod.conf
+        cp /home/ubuntu/db_env/mongod.conf /etc/mongod.conf
+      become: true
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+    - name: set the permissions to mongodb file (equivalent to 0644)
+      file:
+        path: /etc/mongodb.conf
+        state: touch
+        mode: u=rw,g=r,o=r
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+
+    - name: Restart mongodb
+      become: true
+      shell: systemctl restart mongodb
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+    - name: enable mongodb
+      become: true
+      shell: systemctl enable mongodb
+      tags: ['never', 'ec2-configure', 'ec2-database']
 
 
 - name: Configure App
@@ -81,6 +108,7 @@
       npm install -g npm@latest
       npm install mongoose -y
     tags: ['never', 'ec2-configure', 'ec2-application']
+
 # Downloading pm2
   - name: Install pm2
     npm:
@@ -88,16 +116,15 @@
       global: yes
     tags: ['never', 'ec2-configure', 'ec2-application']
 
-
   - name: seed + run app
     shell: |
       cd app/
       npm install
       node seeds/seed.js
       pm2 kill
-      pm2 start app.js
+      pm2 start app.js --name app -i 4 
     environment:
       DB_HOST: mongodb://10.0.1.13:27017/posts?authSource=admin
-    become_user: root
+    ignore_errors: True 
     tags: ['never', 'ec2-configure', 'ec2-application']
 

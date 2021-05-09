@@ -1,15 +1,25 @@
 # Ansible Task
 
-## Task
+## Task Summary
 Use ansible playbooks to launch 3 machines on AWS: a controller, a web-app and a database.
 Implement the 2 tier architecture as IAC with ansible
 Node app has to work with public IP and db working with `/posts`
 
+## Acceptance Criteria
+- Two-tier architecture on AWS
+- Application fully working and communicating with database
+- Configuration management with Ansible
+- Resources brought up dynamically.
+- Fully automatic; no manual steps needed.
+
 ## Solution
 ### Architecture
-In this task, we are using a Vagrant VM as a controller, which spins up two EC2 instances on AWS as agents.
+In this task, we are using a Vagrant VM as a controller, which spins up three EC2 instances on AWS.
+From the three, one EC2 instance acts as a controller, while the other two are agents.
+
 ![Architecture](media/ansible_architecture.jpg)
-As can be seen in the -
+
+As can be seen in the diagram, 
 
 ### Summary
 The above task is completed in a fully automated fashion. The only command required to be executed, is `vagrant up`.
@@ -62,14 +72,20 @@ In this way, we ensure the credentials are kept safe and secure.
 
 ### Networking
 The netwoprking is done *ad-hoc*.
-Firstly, a local virtual machine is brought up with vagrant. This machine runs 
+Firstly, a local virtual machine is brought up with vagrant. This machine runs ansible to provision three virtual machines in a VPC. In this implementation, they are all in the same subnet, although this can easily be changed.
+When the cloud resources spin up, they are assinged a private IP in the VPC, and a public IP that is saved by the localhost. The localhost will then have `ssh` access to the controller via its public IP.
+
+The controller will then be able to connect to the other instances with their internal IP. This makes the connection faster, and safer
 
 ### Provision
+
 ### Configuration
+For configuring the cloud VMs, Ansible is used again. However, this time, Ansible is installed on one of the servers.
+As shown on the architecture diagram, one of the servers will be 
 
 ### Notes
 #### SSH connections with Ansible
 #### Groupsnames and Hostnames
-#### Env variables 
+#### Environment variables 
 
 

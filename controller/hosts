@@ -9,7 +9,7 @@
 #   - A hostname/ip can be a member of multiple groups
 
 [application]
-10.0.1.12 
+10.0.1.12
 
 [database]
 10.0.1.13
