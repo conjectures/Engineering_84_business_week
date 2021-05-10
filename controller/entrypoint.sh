@@ -17,10 +17,15 @@ export ANSIBLE_HOST_KEY_CHECKING=False
 
 ansible-playbook /etc/ansible/playbook.yaml -t ec2-configure -e "ansible_python_interpreter=/usr/bin/python3" 
 
-ssh ubuntu@10.0.1.12 'cd app/
-export DB_HOST=mongodb://10.0.1.13:27017/posts?authSource=admin
-sudo pm2 start app.js'
-
+ssh ubuntu@10.0.1.12 <<'EOF'
+    cd app/
+    export DB_HOST=mongodb://10.0.1.13:27017/posts?authSource=admin
+    sudo killall node
+    sudo pm2 kill
+    sudo npm install
+    node seeds/seed.js
+    sudo pm2 start app.js --name app
+EOF
 
 # show time
 date

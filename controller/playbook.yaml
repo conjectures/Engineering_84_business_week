@@ -21,8 +21,8 @@
 
     - name: copy configuration file
       shell: |
-        rm /etc/mongod.conf
-        cp /home/ubuntu/db_env/mongod.conf /etc/mongod.conf
+        rm /etc/mongodb.conf
+        cp /home/ubuntu/db_env/mongod.conf /etc/mongodb.conf
       become: true
       tags: ['never', 'ec2-configure', 'ec2-database']
 
@@ -116,15 +116,16 @@
       global: yes
     tags: ['never', 'ec2-configure', 'ec2-application']
 
-  - name: seed + run app
-    shell: |
-      cd app/
-      npm install
-      node seeds/seed.js
-      pm2 kill
-      pm2 start app.js --name app -i 4 
-    environment:
-      DB_HOST: mongodb://10.0.1.13:27017/posts?authSource=admin
-    ignore_errors: True 
-    tags: ['never', 'ec2-configure', 'ec2-application']
+    #   - name: seed + run app
+    #     shell: |
+    #       cd app/
+    #       node install
+    #       node seeds/seed.js
+    # 
+    #       pm2 kill
+    #       pm2 start app.js --name app
+    #     environment:
+    #       DB_HOST: mongodb://10.0.1.13:27017/posts?authSource=admin
+    #     ignore_errors: True
+    #     tags: ['never', 'ec2-configure', 'ec2-application']
 
