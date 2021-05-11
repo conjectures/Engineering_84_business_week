@@ -10,7 +10,7 @@
 3. [File Viewing and Manipulation](#file-viewing-and-manipulation)
 3. [Information](#information)
 4. [Process Management](#process-management)
-5. [Permission](#permission)
+5. [File Permissions](#file-permissions)
 6. [Environment Variables](#environment-variables)
 7. [Networking](#networking)
 4. [Secure Shell and Secure Copy](#secure-shell-and-secure-copy)
@@ -156,8 +156,15 @@ ps -aux
 kill PID
 killall process
 ```
-## Permission
+## File Permissions
+It is an important security feature in linux, that not all users can have access permission to certain files. 
+Each file or directory has permissions based on user groups, called **Permission Groups**. The groups are split into `owner`, `group`, and `all users`.
+These permissions are applying to the person that owns the file, the group that the file has been assigned, and all other users accordingly.
+
+Each of these groups has a different *Permission Type*: `read`, `write` and `execute`.
+
 flags `777`, `400`, `600`, `r`, `w`, `x`
+![Permission Flags](permission-flags.png)
 ```
 chmod
 ```
@@ -169,9 +176,29 @@ env
 ## Networking
 
 ## Secure Shell, Secure Copy
+We can use `ssh` to connect to a remote host. The connections are encrypted, so before we establish a connection, a key pair has to be created, and the public key exchanged
+Additional settings can be addes to the `ssh` command with the `-o` flag.
+Some useful settings are `ForwardAgent`, `StrictHostKeyChecking`, etc.
+
+The keys should be stored in `~/.ssh` directory, as ssh will search there first. If the key is located somewhere else, we need to specify it with the `-i` flag.
 ```
 ssh
 ```
+
+We can add a `config` file inside the `~/.ssh` dir. Example
+```
+Host <hostname>
+  Hostname <IP>
+  User <username>
+  ...
+```
+Additionally, we can add commands to be executed to the remote host with the following syntax:
+```bash
+ssh <user>@<host-address> << 'EOF'
+  # commands here
+EOF
+```
+With the configuration file, we can add settings to the `ssh` connection without specifying them with the `-o` flag
 ```
 scp -i IdentityFile.pem filename user@ip:/[path]
 ```
