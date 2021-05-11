@@ -35,10 +35,12 @@ The benefits of using cloud computing is, as opposed to using your own servers a
 - **Hybrid Cloud**: A combination of the above two types
 
 ![Public, Private and Hybrid Clouds](media/public-private-hybrid-clouds.jpeg)
+
 Private clouds are used for applications for sensitive data, including financial institutions or goverments. The hybrid cloud is used when storage of sensitive data is required, however the services offered by cloud providers are also needed.
 Generally, private clouds are much costier as they require buying the resources, paying operation costs, maintenance and specialists to handle the maintenance, migrations etc.
 
 The advantages and disadvantages of each solution can be summarised in the diagram below.
+
 ![Public, Private, Hybrid Advantages and Disadvantages](media/public-private-hybrid-advantages.jpeg)
 
 ### Scaling
@@ -59,14 +61,17 @@ This type of scaling refers to 'upgrading' the server where the application is h
 
 ### One tier architecture
 A single-tier application has all the layers, such as presentation, application and database in the same 'package'. This means that the application and database are on the same host. Single-tier applications are vulnerable and non-flexible. (stateful - complex replication)
+
 ![Single Tier](media/one-tier-software-architecture.png)
 
 ### Two tier architecture
 In a two-tier application, the application and database layers are separated.
+
 ![Two-Tier](media/two-tier-software-architecture.png)
 
 ### Three tier architecture
 In a three tier architecture, the application layer is further divided to front-end (presentation) and back-end (application) layers. They are both in separate servers and only the application can communicate with the database.
+
 ![Three Tier](media/three-tier-software-architecture.png)
 
 
