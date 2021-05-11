@@ -22,9 +22,9 @@ terraform destroy
 
 ## Installation
 Terraform can be downloaded, or installed as shown in this [tutorial](https://learn.hashicorp.com/tutorials/terraform/install-cli)
-## Terraform to lauch ec2 with VPC, subnets, SG services of AWS
+## Terraform: AWS resources
 
-![Terraform AWS](media/AWSEC2AssumeRolewith Terraform.jpg)
+![Terraform AWS](media/AWSEC2AssumeRolewithTerraform.jpg)
 
 ### Securing AWS keys
 The AWS provider offers a flexible means of providing credentials for authentication.
@@ -41,3 +41,9 @@ The static credentials are not recommended as they will be visible when uploaded
 Therefore, the credentials will be provided via environment variables.
 The variables need to be named `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` representing the AWS Access Key and AWS Secret key respectively.
 Additionally, the `AWS_DEFAULT_REGION` and `AWS_SESSION_TOKEN` environment variables are also supported.
+
+### Creating a VPC
+### Creating a subnet
+### Creating a security group
+### Creating an EC2 instance 
+
