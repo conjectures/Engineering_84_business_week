@@ -34,6 +34,12 @@ The benefits of using cloud computing is, as opposed to using your own servers a
 - **Public Cloud**: Clouds that are hosted and maintained by a cloud computing provider
 - **Hybrid Cloud**: A combination of the above two types
 
+![Public, Private and Hybrid Clouds](media/public-private-hybrid-clouds.jpeg)
+Private clouds are used for applications for sensitive data, including financial institutions or goverments. The hybrid cloud is used when storage of sensitive data is required, however the services offered by cloud providers are also needed.
+Generally, private clouds are much costier as they require buying the resources, paying operation costs, maintenance and specialists to handle the maintenance, migrations etc.
+
+![Public, Private, Hybrid Advantages and Disadvantages](media/public-private-hybrid-advantages.jpeg)
+
 ### Scaling
 Scaling refers to changing the capabilities of the hosting servers with the goal of adapting the throughput of the application. As traffic increases or decreases, we need to scale up or scale down accordingly so that the application needs are met. There are two types of scaling that can be applied:
 
@@ -56,3 +62,7 @@ A single-tier application has all the layers, such as presentation, application 
 
 ### Two tier architecture
 ### Three tier architecture
+
+## High Availability Applications
+High-availability application architecture is   
+![Highly Available App](media/wide-availability-app.png)
