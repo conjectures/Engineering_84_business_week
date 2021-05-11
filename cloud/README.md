@@ -9,22 +9,22 @@ Cloud computing is the practice of renting servers and computing resources on de
 ### What are the benefits of cloud computing
 The benefits of using cloud computing is, as opposed to using your own servers are:
 
-- Cost Savings
+- **Cost Savings**
 
   Using cloud computing may reduce the cost of managing and maintaining IT systems. Rather than purchasing expensive systems and equipment, most companies reduce costs by using the resources of cloud computing service providers. 
   As many businesses have seasonal traffic, or even may have most traffic on predictable hours of the day, they can make use of only of the resources they need, and therefore reduce costs when there is not a lot of demand.
 
-- Scalability
+- **Scalability**
 
   Businesses that use cloud computing can scale up or down their operation and storage according to their needs. 
   Rather than purchasing and installing expensive servers by themselves, they use the servers provided by the cloud computing and can in a moments notice, they can increase or decrease the number of servers, or their capabilities, to suit their needs.
 
-- **Reliability**
+- **Reliability** / **Availability**
 
   Well established cloud computing providers can boast of highly reliable servers with minimal down time, as their business model is reliant on this aspect.
   With the use of reproducability and automation tools, a different server can be spun up with the same state, in the small chance that our original server goes down.
 
-- ***Security*
+- **Security**
 
   Depending on the provider, many cloud services have firewalls and other protection methods against malicious attacks. Additionally, they can provide backups and other support for sensitive data.
 
@@ -38,6 +38,7 @@ The benefits of using cloud computing is, as opposed to using your own servers a
 Private clouds are used for applications for sensitive data, including financial institutions or goverments. The hybrid cloud is used when storage of sensitive data is required, however the services offered by cloud providers are also needed.
 Generally, private clouds are much costier as they require buying the resources, paying operation costs, maintenance and specialists to handle the maintenance, migrations etc.
 
+The advantages and disadvantages of each solution can be summarised in the diagram below.
 ![Public, Private, Hybrid Advantages and Disadvantages](media/public-private-hybrid-advantages.jpeg)
 
 ### Scaling
@@ -61,8 +62,24 @@ A single-tier application has all the layers, such as presentation, application 
 ![Single Tier](media/one-tier-software-architecture.png)
 
 ### Two tier architecture
+In a two-tier application, the application and database layers are separated.
+![Two-Tier](media/two-tier-software-architecture.png)
+
 ### Three tier architecture
+In a three tier architecture, the application layer is further divided to front-end (presentation) and back-end (application) layers. They are both in separate servers and only the application can communicate with the database.
+![Three Tier](media/three-tier-software-architecture.png)
+
 
 ## High Availability Applications
-High-availability application architecture is   
+High-availability applications are products that are set up with robust production systems, minimising downtime and service interruptions. 
+
+Regardless of how reliable the systems and software used are, problems can always arise that will bring down the servers.
+In order to implement highly available infrastructure involves including redundancies in order to minimise the impact of such events.
+Highly available systems can recover from server or component failures automatically.
+
 ![Highly Available App](media/wide-availability-app.png)
+
+To make a system highly available, single points of failure ashould be minimised
+In the above diagram, the server does not have a single point of failure as:
+- Redundant components for the application are in place
+- There is a mechanism on top of this layer (load balancer) is able to detect failures in the components and is able to adapt its behavior for recovery.
