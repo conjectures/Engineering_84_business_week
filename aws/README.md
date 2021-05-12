@@ -93,6 +93,36 @@ Additionally, S3 has no Region or Availability Zone requiremetns, as it is globa
 |One Zone-IA| Infrequent, quick access on single availability zone|
 |Glacier|Archiving|
 |Glacier Deep Archive||
-|Outposts
+|Outposts||
+
+## Load Balancers
+There are three types of load balancers provided by AWS:
+
+### Application Load Balancer
+### Network Load Balancer
+### Classic Load Balancer
+Makes routing decisions at either the transport layer (TCP) or the application layer (HTTP/HTTPS). 
+Classic load balancers require a fixed relationship between the balancer port and the container instance port.
+
+
+## Auto Scaling Groups
+The load on websites ansd applications will change in real life. For that reason we use **Auto Scaling Groups (ASG)** to scale out (add EC2 instances)  or in (remove EC2 instances) to match an increased or decreased load accordingly.
+We can also use an ASG to ensure that we have a minimum, or maximum number of machines running
+These new machines are automatically registered to the load balancer.
+
+![ASG with Load Balancer](asg-with-load-balancer.png)
+
+### Auto Scaling Alarms
+It is possible to scale ASG based on Cloud Watch alarms:
+
+![Scaling with CloudWatch Alarms](cooldowns-example-scaling-policy-diagram.png)
+
+An alarm monitors a metric, such as average CPU load. And the metrics are computed for all the ASG instances.  
+Based on those metrics, we can create scla-out and scale-in policies.
+
+We can also scale based on a **custom metric**, for example, the number of connected users. Therefore, the scaling group alarms are not limited by the metrics provided by AWS CloudWatch.
+To do this, we need to send the custom metric from the application on EC2 to CLoudWatch, then use it to create alarms and scaling policy for ASG.
+
+Additionally, ASG can terminate instances marked as unhealthy by a Load Balancer, and then replace them.
 
 
