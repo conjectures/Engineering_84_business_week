@@ -98,11 +98,31 @@ Additionally, S3 has no Region or Availability Zone requiremetns, as it is globa
 ## Load Balancers
 There are three types of load balancers provided by AWS:
 
-### Application Load Balancer
-### Network Load Balancer
 ### Classic Load Balancer
 Makes routing decisions at either the transport layer (TCP) or the application layer (HTTP/HTTPS). 
 Classic load balancers require a fixed relationship between the balancer port and the container instance port.
+
+### Application Load Balancer
+Application load balancers only apply to the application layer, that is, the HTTP layer.
+It is used to load balance to multiple HTTP applications across machines. These machines are grouped into **Target Groups**.
+Application Load Balancers can also be used to load balance between multiple applications on the same machine, for example containers.
+It has support for HTTP/2 and WebSocket and can support HTTP to HTTPS redirects.
+It also has routing tables to different target groups (routing based on path in URL, on hostname or on query strings or headers)
+In short, it does the job of multiple Classic Load Balancers per application
+
+ALB are a great fit for micro services and container based applications
+It has port mapping freature to redirect to a dynamic port in ECS
+
+The target groups of an ALB can be:
+- EC2 instances
+- EC2 tasks
+- Lambda functions
+- IP addresses
+
+ALBs can route to multiple target groups
+
+Additionally, when an Application Load Balancer talks to our instances, it will use its own internal IP, and will have the client's IP in the `X-Forwarded-For` and `X-Forwarded-Port` headers in the HTTP request.
+### Network Load Balancer
 
 
 ## Auto Scaling Groups
