@@ -13,7 +13,8 @@
 5. [File Permissions](#file-permissions)
 6. [Environment Variables](#environment-variables)
 7. [Networking](#networking)
-4. [Secure Shell and Secure Copy](#secure-shell-and-secure-copy)
+4. [Secure Shell](#secure-shell)
+4. [Secure Copy](#secure-copy)
 
 
 ## Shell Command Structure
@@ -45,6 +46,19 @@ When a linux command operates, three **streams** are established: `stdin`, `stdo
 
 - Finally `stderr` stream outputs errors from a program and is combined with the `stdout` to be displayed on the terminal. However, it can be redirected for logging purposes.
 
+Streams in Linux are handled as files. Therefore, the streams have unique identifiers, **file descriptors** assigned to them. These are descriptors are a part of the POSIX API, a standard for maintaining compatibility between operating systems.
+In Linux systems, every file that is currently opened, gets assigned an integer file descriptor. Therefore
+The file descriptors associated with each stream can be seen below:
+|value|stream|
+|---|---|
+|0 | `stdin`|
+|1 | `stdout`|
+|2 | `stderr`|
+
+Additionally, `-1` values are reserved foo "no value" errors.
+Othe
+Data streams and their file desciptors can be visulised as shown below:
+![Linux Streams](Stdstreams.png)
 
 ## Navigation
 
@@ -164,7 +178,7 @@ These permissions are applying to the person that owns the file, the group that 
 Each of these groups has a different *Permission Type*: `read`, `write` and `execute`.
 
 flags `777`, `400`, `600`, `r`, `w`, `x`
-![Permission Flags](permission-flags.png)
+![Permission Flags](permission-flags.jpg)
 ```
 chmod
 ```
@@ -175,9 +189,9 @@ env
 ```
 ## Networking
 
-## Secure Shell, Secure Copy
-We can use `ssh` to connect to a remote host. The connections are encrypted, so before we establish a connection, a key pair has to be created, and the public key exchanged
-Additional settings can be addes to the `ssh` command with the `-o` flag.
+## Secure Shell
+The `ssh` is a protocol that allows secure connections to a remote host. The connections are encrypted, so before we establishing a connection, a key pair has to be created, and the public key exchanged
+Additional settings can be added to the `ssh` command with the `-o` flag.
 Some useful settings are `ForwardAgent`, `StrictHostKeyChecking`, etc.
 
 The keys should be stored in `~/.ssh` directory, as ssh will search there first. If the key is located somewhere else, we need to specify it with the `-i` flag.
@@ -199,7 +213,35 @@ ssh <user>@<host-address> << 'EOF'
 EOF
 ```
 With the configuration file, we can add settings to the `ssh` connection without specifying them with the `-o` flag
+
+### The ssh-agent
+Typing passphrases for to decrypt `ssh` keys can be tedious, and so programs like the `ssh-agent` can help with that.
+The `ssh-agent` stores the unencrypetd version of the key in program memory (process in Linux) so that it can be used whenever required.
+This process does not terminate after the login session ends, unlike a normal `ssh` process, and can therefore persist throughout multiple logins. 
+It can even be forwarded within the `ssh` session between hosts, allowing the key to be used on the remote host as well.
+This is useful in the case of a jump host, where the key is required but we don't want to store it on the remote location.
+
+Most Linux distributions have the `ssh-agent` running by default on startup.
+To check if it is currently working, the environment variables `$SSH_AGENT_PID` and `$SSH_AUTH_SOCK` can be evaluated.
+```bash
+echo $SSH_AGENT_PID
+```
+If a PID is available, it means that the agent is not currently working. To start it, use:
+```bash
+eval "$(ssh-agent -s)"
+```
+Then, different keys can be added to the agent with the `ssh-add` command:
+```bash
+ssh-add ~/.ssh/<path-to-private-key>
+```
+If the key is encrypted with a passphrase, the agent will ask for it then store the key to check the current keys on the agent, use `ssh-add`:
+```bash
+ssh-add -L
+```
+
+## Secure Copy
 ```
 scp -i IdentityFile.pem filename user@ip:/[path]
 ```
+
 
