@@ -1,9 +1,10 @@
-# Python Database
+# Using Databases with Python
 
 Most software applications require the storage and maintenance of persistent data.
 For that reason, a database is used, like SQL.
 
-In order to communicate with the Database Management System of SQL Servers, the different **Python SQL Libraries** can be used.
+In order to communicate with the Database Management System of SQL Servers,
+the different **Python SQL Libraries** can be used.
 
 In this lesson, the `pyodbc` library is used to connect to an AWS hosted database that is using the SQL Server DBMS by Microsoft.
 The DB is running the Northwind example dataset for testing purposes.
@@ -81,11 +82,11 @@ cursor.execute(query)
 
 # To remove record, we can specify the record to remove with a query
 query = "Apple"
-cursor.execute("DELETE FROM Products WHERE ProductName = '{}'.format(query))
+cursor.execute("DELETE FROM Products WHERE ProductName = '{}'".format(query))
 
 # We can also update a record:
 query = 'Apple'
-new_price = 2 
-cursor.execute("UPDATE Products SET UnitPrice = {} WHERE ProductName = {}".format(new_price, query))
+new_price = 2
+cursor.execute("UPDATE Products SET UnitPrice = '{}' WHERE ProductName = '{}'".format(new_price, query))
 ```
 
