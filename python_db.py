@@ -2,6 +2,7 @@ import pyodbc
 
 # Establish connection between python and sql with pyodbc
 
+# temp
 server = "18.135.103.95"
 database = "Northwind"
 username = "SA"
