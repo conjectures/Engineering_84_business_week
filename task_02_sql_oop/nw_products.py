@@ -31,13 +31,15 @@ class ConnectToTable():
             print("Table not found")
 
     def insert_record(self, item):
+        # evaluate if all record fields are present
         pass
 
     def update_record(self, item):
+        # evaluate if all record fields are present
         pass
 
     def delete_record(self, item):
-        pass
+        self.cursor.execute("DELETE FROM {} WHERE ProductName = '{}'".format(self.table, item))
 
     # Method that establishes connection with database
     def _establish_connection(self):
@@ -63,9 +65,6 @@ class ConnectToTable():
         return creds
 
 
-
-
-
 def main():
 
     dbinstance = ConnectToTable('Products')
@@ -74,7 +73,6 @@ def main():
     # if products:
     #     print(f"Found {len(products)} products")
     print(f'Version: {dbinstance.get_db_version()}')
-
 
 
 if __name__ == '__main__':
