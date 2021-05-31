@@ -4,7 +4,8 @@
 
 DevOps is a combination of Development and Operations. 
 
-In the past, the two teams were working in isolation, and a lot of time was wasted since the cooperation between them was not synergistic. The developers work to push new versions as soon as possible, while the Operations goal is to keep the project stable. Therefore, the goals of the two teams are naturally at odds with one another. 
+In the past, the two teams were working in isolation, and a lot of time was wasted since the cooperation between them was not synergistic. The developers work to push new versions as soon as possible, while the Operations goal is to keep the project stable.
+Therefore, the goals of the two teams are naturally at odds with one another. 
 
 With DevOps, the notion of combining the two goals is more achievable. DevOps embraces the fast paced development of the programming team while keeping the stability of that is required, with the use of automated tools, CI/CD pipelines, infrastructure as code and many other tools.
 In this fashion, time, money and effort is no longer wasted by trying to integrate the two groups.
@@ -22,8 +23,8 @@ I am really impressed with the way that Sparta Global treats its current and pas
 
 ## What is Agile and what is the benefit of implementing it?
 
-Agile is a methodology, or a set of values and principles, that adapts the software development cycle for modern development of (digital) products.
-It is inspired by the Agile manifesto
+Agile is a **methodology**, or a set of values and principles, that adapts the software development cycle for modern development of (digital) products.
+It is inspired by the Agile manifesto.
 It mainly focuses on adaptability, inclusivity of the client, iterative growth and improvement, communication, along with many more practices that help teams achieve their end goal of completing a product.
 The Agile methodology is adopted more and more, as it has proven a recipe for success for countless projects. 
 
@@ -50,8 +51,11 @@ The four values of agile are:
 
 ## What is SCRUM and what is the benefit of implementing it?
 
-SCRUM is a term borrowed from rugby, where a team would join together and talk about their strategy. In the same way, SCRUM is a methodology,
-usually used in conjunction with Agile, that improves the communication between team members, irons out any problems that are in the way and fortifies collaborative effort by bringing the team closer together.
+SCRUM is a term borrowed from rugby, where a team would join together and talk about their strategy. 
+In fact, SCRUM is a manifestation of the agile methodology. It is a **framework** that can be used to help teams developing complex products.
+This is achieved by breaking tasks down into small goals that can be completed in time boxed iterations. 
+The scrum framework defines the *Scrum Events* in order to facilitate teamwork and communication.
+
 Teams that adopt SCRUM, benefit greatly by doing so, as it helps all members keep up, stay in the same page, avoid misunderstandings and help each other.
 
 <br>
@@ -90,8 +94,7 @@ The five events of Scrum are:
 <br>
 
 ## What are your weaknesses
-- Socializing: (+ strategy to imporve)
-- Communication: (+ strategy to improve)
+`redacted`
 <br>
 
 ## Where do you see yourself in 2-5 years
