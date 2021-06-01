@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>DevOps Engineering 84</title>
+  </head>
+
+  <body>
+    <h1>
+      Welcome {{name}}!
+    </h1>
+    <p>Dictinary items</p>
+    {% for key, value in dictionary.items() %}
+      <li>
+        {{key}}: {{value}}
+      </li>
+    {% endfor %}
+
+    <p> List items</p>
+    <ul>
+    {% for item in list %}
+      <li>
+        {{item}}
+      </li>
+    {% endfor %}
+    </ul>
+
+
+  </body>
+</html>
