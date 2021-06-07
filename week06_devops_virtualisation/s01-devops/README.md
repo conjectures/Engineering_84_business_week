@@ -81,31 +81,31 @@ This is to demonstrate the importance of transparency, visibility and the transf
 - Security
 
 ## DevOps Tools
-- Build
+- **Build**
 
   npm, git, gitlab, github, docker, kubernetes, etc
 
-- Continuous Integration
+- **Continuous Integration**
 
   split, buddybuild, circleCI, TravisCI, Jenkins, TeamCity, Codeship
 
-- Deploy
+- **Deploy**
 
   Google Cloud Platform, AWS, Microsoft Azure, Ansible, Heroku, Chef, puppet
 
-- Operate / Monitoring
+- **Operate / Monitoring**
 
   Nagios, Raygun, splunk, zabbix, bigpanda, datadog, appdynamics, New Relic
 
-- Continuous Feedback
+- **Continuous Feedback**
 
   salesforce, saucelabs, servicenow, zendesk, zephyr, browserstack
 
-- Plan
+- **Plan**
 
   Office, trello, dropbox, Basecamp, asana, draw.io, planio, google docs, 
 
-- Communication
+- **Communication**
 
   Microsoft Teams, slack pagerduty, BlueJeans
 
