@@ -1,68 +1,137 @@
 # Vagrant
-```bash
-# Automatically create a vagrant file with <image> as os
-vagrant init <image>
-# Spin up the virtual machine based on the Vagrantfile
-vagrant up
-vagrant destroy
-vagrant reload
-vagrant 
-```
+Vagrant is an open-source product from HashiCorp used for building and maintaining portable virtual software development environments. 
+It tries to simplify the software configuration management of visualisation in order to increase development productivity.
+It is written in Ruby.
+
+Vagrant uses "Provisioners" and "Providers" as building blocks to manage the development environments.
+Providers are tools like VirtualBox, Hyper-V, Docker, VMware and other virtualisation software, and are used to set up and create the virtual environments.
+Provisioners are tools like Ansible, Chef and Puppet that are used to configure those environments.
+
+
 ![Vagrant Process Cycle](vagrant.png)
-# Linux commands:
-```bash
-# name of pc
-uname
 
-# list directories
-ls
+## Installation
+The following installation describes the installation of Vagrant on Ubuntu with `kvm` as provider and `libvirt` used to communicate with it.
 
-# make directory
-mkdir <name>
-
-# create file
-touch <file name>
-
-# escalate priviliges (admin)
-sudo <command>
-
-# change user to root
-sudo su
-
-# go up one directory
-cd ..
-
-# Print working directory
-pwd
-
-# Rename, or move files
-mv <old-filename> <new-filename>
-
-# Copy file
-cp <filename> <path>
-
-# Delete file
-rm <filename>
-
-# List files with more info (and permissions)
+Firstly, install `KVM` for Ubuntu:
+```sh
+sudo apt install qemu qemu-kvm libvirt-clients libvirt-daemon-system virtinst bridge-utils
+```
+Enable `libvirt`
+```sh
+sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+# Check status
+systemctl status libvirtd
 ```
 
-- attach box to ip in private network
-
-We can install a webserver to check that the network works
+Install `vagrant` and install dependencies needed at build time with `build-dep`:
+```sh
+sudo apt-get build-dep vagrant ruby-libvirt
 ```
+Also, install the dependencies needed by `vagrant-libvirt`:
+```sh
+sudo apt-get install qemu libvirt-bin ebtables dnsmasq-base libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev libguestfs-tools
+```
+Finally, install the [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt#installation) plugin
+```
+vagrant plugin install vagrant-libvirt
+```
+> It should be noted that not all 'boxes' can be run with KVM. When searching for boxes in the [Vagrant box store](https://app.vagrantup.com/boxes/search), the user should filter by provider so that `libvirt` compatible boxes show up.
+
+Also, when the `vagrant up` command is used, the provider might also be specified, if not inside the Vagrant file.
+Alternatively, specify it as an environment variable in `.bashrc` to have it permanently used as provider
+```sh
+export VAGRANT_DEFAULT_PROVIDER=libvirt
+```
+
+## Creating VMs with Vagrant
+Automatically create a vagrant file with <image> as os
+```sh
+vagrant init <image>
+```
+The above command will automatically create a Vagrant file that contains a lot of information commented.
+A basic Vagrantfile should look as follows
+```ruby
+Vagrant.configure("2") do |config|
+  # Specify virtual machine image
+  config.vm.box = "generic/ubuntu1604"
+end
+```
+The above snippet constitutes a basic Vagrantfile setup that will provision an Ubuntu 16.04 Virtual Machine.
+Vagrant will automatically go ahead and look for a file called `Vagrantfile` in the current directory and execute any code within it. If it is not found, an error is returned.
+To go ahead and create the machine, insert the above snippet in `Vagrantfile` and then run it with the subcommand `up`:
+```sh
+vagrant up
+```
+When the process completes, a virtual machine will be running on the background, as prescribed in the file.
+Some other useful commands are shown below:
+```sh
+# Make secure connection to the VM
+vagrant ssh
+
+# Destroy all VMs
+vagrant destroy
+
+# Reload the Vagrantfile and apply changes
+vagrant reload
+
+# Pause the VM
+vagrant halt
+
+# Display help menu
+vagrant help
+```
+
+## Using Vagrant VM
+As mentioned above, we can 'connect' to the VM with `vagrant ssh`. When the secure shell process is established we can use some [commands](#linux-commands) to perform actions.
+
+We also want to check if the networking between the VM and the host is working properly.
+First, we attache an ip in the Vagrant private network. To do that, we modify the `Vagrantfile` as follows:
+```ruby
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu1604"
+
+  # attach private network with IP
+  config.vm.network "private_network", ip:"192.168.10.100"
+
+  # Attach folder
+  config.vm.synced_folder "project", "/home/vagrant/project"
+
+  config.vm.provision "shell", path: "project/environment/provision.sh"
+end
+```
+With the above snippet, we create specify the IP of the VM in the private network, we also 'mount' a folder from our host system as 'synced folder', then we run a provisioning file inside the mounted folder.
+This provision shell installs the `NginX` webserver, and node so that we can run a nodejs project.
+
+> Nginx is a webserver that can be used as a reverse proxy, that is, we can redirect incoming traffic from a port to our application with the url querystring, or 'path'.
+
+After Vagrantfile is updated, we need to halt and 'reload' the file. If issues arise when halting and reloading the file, try destroying the machine with `vagrant destroy`, and then recreating it with `vagrant up`.
+
+We could also install the webserver manually:
+```sh
 sudo apt install nginx -y
 ```
-Check status of process
+To check if the server runs properly, we can check it's status with `systemd`:
+```sh
+sudo systemctl status nginx
+```
+Alternatively, we could check the IP on our browser to see if the default `nginx` page shows up.
 
-- run tests on host machine with bundle (ruby)
+The application we want to run has some tests that are checking if the environment is set up correctly. 
+To run these tests, (inside the host), we go inside the  `spec-tests` directory and use `rake`. However, we first need to install `rake` for ruby with the `bundler`.
+The `bundler` will automatically install all the packages in the `Gemfile` inside the environment directory
+
+```ruby
+# Install bundler
+gem install bundler
+
+# Install ruby packages (gems)
+bundle install
+
+# Perform tests
 rake spec
-
-- install dependencies to pass tests
-- write down install commands in a script `provision.sh`
-
-- add shell script to the vagrantfile
-- execute script with the `config.vm.provision` var
+```
 
 ## Environment Variables
 To list environment variables, we can use the `env` command:
@@ -104,3 +173,39 @@ The `.profile` file will get loaded on the next time we login to our system, or 
 user@host: ~$ source .profile
 ```
 Alternatively, the echo command can be 'piped' into the `.bashrc` file.
+
+
+## Syncing folders
+We can sync folders with our vagrant machine with the `synced_folder` variable, as shown below:
+```ruby
+  config.vm.synced_folder "project", "/home/vagrant/project"
+```
+
+## Linux commands
+As the VM is provisioned with a Linux OS, some basic commands are shown for reference.
+```sh
+# Show the name of the pc
+uname
+# List directories
+ls
+# Make directory
+mkdir <name>
+# Create file
+touch <file name>
+# Escalate priviliges (admin)
+sudo <command>
+# Change user to root
+sudo su
+# Go up one directory
+cd ..
+# Print working directory
+pwd
+# Rename, or move files
+mv <old-filename> <new-filename>
+# Copy file
+cp <filename> <path>
+# Delete file
+rm <filename>
+# List files with more info (and permissions)
+ll
+```
