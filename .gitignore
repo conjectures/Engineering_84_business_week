@@ -4,6 +4,9 @@ __pycache__
 # pyenv
 .python-version
 
+# Vagrant
+.vagrant
+
 # Credentials
 creds*
 credentials.txt
