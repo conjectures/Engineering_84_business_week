@@ -12,7 +12,7 @@
 - [Subject 03: AWS Hands On](s03-guide)
 
 ### *Days 04*
-- [Subject 04: Linux Commands]()
+- [Subject 04: Linux Commands](s04-linux-commands)
 
 ### *Days 05*
 - [Subject 05: Git Workflows]()
