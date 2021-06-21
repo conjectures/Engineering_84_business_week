@@ -74,15 +74,28 @@ To do this we use:
 git reset HEAD~1
 ```
 
-## Forking
+## Fork
 Forking is the action of making a repo copy for your own use.
-This may sound very similar to a `git clone`, however, with `fork` there is an important difference.
-When forking, the copy of the repo is performed on the server. The owner of the repo is yourself, meaning other 
+This may sound very similar to a `git clone`, however, with `fork` the repo copy is performed on the server.
+The original repo contributors may not be able to push code on the forked repo without your approval, since the owner is yourself.
+
+Forking  the repo is useful for many occasions.
+Firstly, if a contributor wants to work on an issue without impacting the original repo, or if he doesn't have permissions to push, he can go ahead and fork it.
+He can then perform the changes he wants and later ask for the original repo owner to 'merge' it.
+
+Additionally, forking a repo could be a part of the collaborative development process for a team project.
+Each member could have their own, fork of the main project that they work on, and their changes could be automatically or manually be merged after testing and approval.
+
 
 ## Merging
+Merge is the process of combining branches of a repository. The branches could be different versions of the same branch, or they could be an unrelated branch altogether.
+
 ```
+# Fetch the latest changes (of all branches) on repo located at <remote> address
 git fetch <remote>
-git 
+
+# Merge current branch with 
+git merge <branch>
 ```
 
 ## Pulling
@@ -97,3 +110,7 @@ If `git` sees that there are changes, either unstaged, or staged, it will cancel
 
 ### Download remote differences but do not apply them yet
 
+## Workflows
+
+### Personal Repository Workflow
+### Collaborative Workflow
