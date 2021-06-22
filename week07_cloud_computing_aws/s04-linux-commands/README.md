@@ -4,17 +4,18 @@
 
 ## Contents
 1. [Shell Command Structure](#shell-command-structure)
-1. [Linux Streams](#linux-streams)
-1. [Navigation](#navigation)
-2. [Listing and Searching](#listing-and-searching)
-3. [File Viewing and Manipulation](#file-viewing-and-manipulation)
-3. [Information](#information)
-4. [Process Management](#process-management)
-5. [File Permissions](#file-permissions)
-6. [Environment Variables](#environment-variables)
-7. [Networking](#networking)
-4. [Secure Shell](#secure-shell)
-4. [Secure Copy](#secure-copy)
+2. [Linux Streams](#linux-streams)
+3. [Pipelines and Redirects](#pipes-and-redirects)
+4. [Navigation](#navigation)
+5. [Listing and Searching](#listing-and-searching)
+6. [File Viewing and Manipulation](#file-viewing-and-manipulation)
+7. [Information](#information)
+8. [Process Management](#process-management)
+9. [File Permissions](#file-permissions)
+10. [Environment Variables](#environment-variables)
+11. [Networking](#networking)
+12. [Secure Shell](#secure-shell)
+13. [Secure Copy](#secure-copy)
 
 
 ## Shell Command Structure
@@ -46,8 +47,8 @@ When a linux command operates, three **streams** are established: `stdin`, `stdo
 
 - Finally `stderr` stream outputs errors from a program and is combined with the `stdout` to be displayed on the terminal. However, it can be redirected for logging purposes.
 
-Streams in Linux are handled as files. Therefore, the streams have unique identifiers, **file descriptors** assigned to them. These are descriptors are a part of the POSIX API, a standard for maintaining compatibility between operating systems.
-In Linux systems, every file that is currently opened, gets assigned an integer file descriptor. Therefore
+In Linux systems, every file that is currently opened, gets assigned an integer value, called **file descriptor**. These descriptors are a part of the POSIX API, a standard for maintaining compatibility between operating systems.
+Streams in Linux are handled as files. Therefore, the streams have unique identifiers, **file descriptors** assigned to them.
 The file descriptors associated with each stream can be seen below:
 |value|stream|
 |---|---|
@@ -56,9 +57,76 @@ The file descriptors associated with each stream can be seen below:
 |2 | `stderr`|
 
 Additionally, `-1` values are reserved foo "no value" errors.
-Othe
+
+
 Data streams and their file desciptors can be visulised as shown below:
+
 ![Linux Streams](Stdstreams.png)
+
+Linux processes do not care from where the streams are starting or terminating. That means, a process does not change behaviour if we the output stream heads towards a file or towards the terminal.
+We can redirect the output of a linux process with pipes and redirects
+
+## Pipes and Redirects
+
+The behaviour mentioned earlier is one of the more powerful and useful features of shell scripting. 
+Allowing the user to direct the outputs and inputs as needed increases the flexibility and the capability of unix processes.
+The two commands that enable this behaviour is the pipe `|` and the redirect symbol `>`.
+
+1. The pipe command
+
+With the pipe symbol, we can 'pipe' the stdout of one process into the input of another. 
+This means, we can have many dynamic processes, all feeding into each other, with minimal intervention by the user.
+For example, we want to read a file and search for all the occurences of a pattern. We use the `cat` command to read, and we can search `stdin` with `grep`.
+Therefore, by combining the two, we can search the file:
+```sh
+cat file.txt | grep -i 'pattern'
+```
+The above snippet will output all the lines where the pattern is found.
+We can use the pipe command as many times as we want.
+This means that, we can chain multiple commands. All of them getting input from the previous command, processing it somehow and later passing it to the next command.
+In this way we can create useful and intricate pipelines that have complex behaviour, all in a single line, often called **one-liners**.
+
+2. Redirect command.
+
+The redirection command is used to redirect the `stdout` and `stderr` streams.
+As mentioned earlier, the symbol `>` is used to specify a redirect command. After the `>` we specify the location, usually a file:
+```sh
+ls > list.txt
+```
+This is a shorthand that means "redirect the `stdout` to the file and the `stderr` to the terminal".
+We can explicitly redirect both by prepending their file descriptors. That is, we can use `1>` to redirect `stdout` and `2>` to redirect `stderr`:
+
+```sh
+# Explicitly redirect stdout
+ls ~/Documents 1> list.txt
+
+# Explicitly redirect stderr
+ls ~/NonExistentDirectory 2> log.txt
+
+# Execute script, redirecting both stderr and stdout
+./script.sh 1> output.txt 2> errors.txt
+```
+We can also redirect both streams to the same file with `2>&1` after we specify the file:
+```sh
+# Redirect stdout and stderr to log.txt
+./script.sh > log.txt 2>&1
+```
+If we use a single `>` symbol, the file we place output will be truncated. If we want to append the output, we must use double `>>`:
+```sh
+# Overwrite log file with script output
+./script.sh > log.txt
+
+# Append script output to log file
+./script.sh >> log.txt
+```
+
+Finally, we can perform the pipeline example shown above, by redirecting the output from a file to the `grep` command:
+
+```sh
+grep -i 'pattern' < file.txt
+```
+
+
 
 ## Navigation
 
