@@ -222,9 +222,14 @@ When we enter `nano`, we can view the file contents, edit them, save the file an
 For `vim` it is more difficult to perform these actions due to its 'modal operation'. By entering different modes, the same keypresses have different functionality. To quickly exit the program, press `esc`, then type `:q!` and press `Enter` to not make any changes.
 
 ## Information
-```
-man
-```
+If we want to find out more info about a specific command, we can use `man` to bring up its manual.
+
+```sh
+man <command>
+``` 
+
+All core unix commands have a comprehensive manual including a description, syntax and parameter explanation for your convenience. 
+The manual is brought up with the `more` program, which we can search with using the `/` key.
 
 ## Process Management
 ```
@@ -246,7 +251,9 @@ These permissions are applying to the person that owns the file, the group that 
 Each of these groups has a different *Permission Type*: `read`, `write` and `execute`.
 
 flags `777`, `400`, `600`, `r`, `w`, `x`
+
 ![Permission Flags](permission-flags.jpg)
+
 ```
 chmod
 ```
@@ -306,10 +313,13 @@ If the key is encrypted with a passphrase, the agent will ask for it then store 
 ```bash
 ssh-add -L
 ```
-
+### Jump Hosting
+```sh
+ssh -J
+```
 ## Secure Copy
 ```
-scp -i IdentityFile.pem filename user@ip:/[path]
+scp -i <identity.pem> <source> <user>@<ip>:<destination>
 ```
 
 
