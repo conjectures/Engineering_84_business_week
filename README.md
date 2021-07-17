@@ -8,7 +8,7 @@
 5. [Week 5 - Python Project](week05_python_project)
 6. [Week 6 - Devops Introduction and Virtualisation](week06_devops_virtualisation)
 7. [Week 7 - Cloud Computing and AWS](week07_cloud_computing_aws/)
-8. [Week 8 - CICD & Jenkins]()
+8. [Week 8 - CICD & Jenkins](week08_cicd/)
 9. [Week 9 - IAC & Ansible]()
 
 
