@@ -132,4 +132,10 @@ PasswordAuthentication yes
 ```
 After that, we can try to execute the ansible playbooks from the controller like normal.
 
+### Edit ansible secrets
+We can edit an file that was added to the ansible vault with the `edit` command:
+```bash
+ansible-vault edit /etc/ansible/group_vars/all/pass.yaml
+```
+We need to enter the password to decrypt the file first.
 
