@@ -10,3 +10,9 @@ __pycache__
 # Credentials
 creds*
 credentials.txt
+
+# Node files
+package-lock.json
+
+# Log files
+*.log
