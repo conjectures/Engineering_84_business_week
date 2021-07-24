@@ -9,7 +9,7 @@
 - [Subject 02: Continuous Integration & Delivery Introduction](s02-cicd-intro)
 
 ### *Day 04*
-- [Subject 03: Jenkins Introduction]()
+- [Subject 03: Jenkins Introduction](s03-jenkins-intro)
 
 ### *Days 05*
 - [Jenkins Task]()
