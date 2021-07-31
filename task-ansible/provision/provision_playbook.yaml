@@ -1,0 +1,133 @@
+# AWS Playbook
+---
+- name: Creating EC2 Instances
+  hosts: localhost
+  connection: local
+  vars_files:
+    - group_vars/all/pass.yaml
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Provisioning Instances
+      block:
+        - name: Provision "{{item}}" 
+          tags: create_ec2
+          ec2:
+            region: eu-west-1
+            key_name: eng84devops
+            aws_access_key: "{{aws_access_key}}"
+            aws_secret_key: "{{aws_secret_key}}"
+            # security group
+            # group:
+            instance_type: t2.micro
+            image: ami-038d7b856fe7557b3
+            wait: yes
+            wait_timeout: 500
+            count: 1
+            private_ip: "{{item.private_ip}}"
+            instance_tags:
+              Name: "{{item.name}}"
+              os: ubuntu
+              group: "{{item.groups}}"
+
+            monitoring: no
+            vpc_subnet_id: subnet-02c6d569a098d5e79
+            assign_public_ip: yes
+          register: ec2
+          delegate_to: localhost
+          loop:
+            - { name: 'eng84_alexis_controller', groups: 'control' , private_ip: '10.0.1.11', ami: 'ami-0943382e114f188e8'}
+            - { name: 'eng84_alexis_application', groups: 'application' , private_ip: '10.0.1.12', ami: 'ami-038d7b856fe7557b3'}
+            - { name: 'eng84_alexis_database', groups: 'database' , private_ip: '10.0.1.13', ami: 'ami-038d7b856fe7557b3'}
+          register: ec2
+      tags: ['never', 'ec2-create', 'ec2']
+
+    - name: Add Instances to Host Group
+      add_host:
+        hostname: "{{item.instances[0].public_ip}}"
+        groupname: "{{item.instances[0].tags.group}}" 
+      loop: "{{ec2.results}}"
+      tags: ['never', 'ec2-create', 'ec2']
+
+    - name: Wait for SSH to come up
+      local_action:
+        module: wait_for
+        host: "{{item.instances[0].public_ip}}"
+        port: 22
+        delay: 10
+        timeout: 120
+      loop: "{{ec2.results}}"
+      tags: ['never', 'ec2-create', 'ec2']
+
+    - name: Add Controller key to known hosts
+      connection: local
+      shell: |
+        ssh-keyscan -H {{groups.control[0]}} >> /home/vagrant/.ssh/known_hosts
+      tags: ['never', 'ec2-create', 'ec2']
+
+      #     - name: debug ssh agent
+      #       become: false
+      #       shell: |
+      #         ssh-add -L 
+      #       register: sshagent
+      #       tags: ['never', 'ec2-controller', 'ec2']
+      # 
+      #     - name: debug ssh agent - show message
+      #       debug:
+      #         msg: "{{sshagent}}"
+      #       tags: ['never', 'ec2-controller', 'ec2']
+
+- name: Configure Controller
+  hosts: control
+  remote_user: ubuntu
+  gather_facts: true
+  become: false
+  tasks:
+
+    - name: Rsync configuration files to controller
+      ansible.posix.synchronize:
+        src: /home/vagrant/controller
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-controller', 'ec2']
+
+    - name: Rsync application files to controller
+      ansible.posix.synchronize:
+        src: /home/vagrant/application
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-controller', 'ec2']
+
+- name: Set up SSH Agent forwarding
+  hosts: localhost
+  gather_facts: false
+  become: true
+  vars:
+    controller_host: "{{ groups.control[0] }}"
+    application_host: "{{ groups.application[0] }}"
+  tasks:
+
+    - name: Remove old ssh config
+      file:
+        state: absent
+        path: /home/vagrant/.ssh/config
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+    - name: Setup ssh config 
+      copy:
+        src: /home/vagrant/provision/config
+        dest: /home/vagrant/.ssh/config
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+    - name: Add host ip to config
+      ansible.builtin.lineinfile:
+        path: /home/vagrant/.ssh/config
+        line: "  HostName {{controller_host}}"
+        insertbefore: ^\W{2}User
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+    - name: Save application server IP
+      shell: |
+        echo "Application found at:\nhttp://{{ application_host }}" > /home/vagrant/myhosts.txt
+      tags: ['never', 'ec2-ssh', 'ec2']
+
+

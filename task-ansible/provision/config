@@ -1,0 +1,4 @@
+Host controla
+  User ubuntu
+  ForwardAgent yes
+  StrictHostKeyChecking no

@@ -16,3 +16,10 @@ package-lock.json
 
 # Log files
 *.log
+=======
+
+# Secrets
+pass.yaml
+# Backups
+bkp/
+*.bkp

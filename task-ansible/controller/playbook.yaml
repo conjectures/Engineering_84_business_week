@@ -1,0 +1,131 @@
+# AWS Playbook
+---
+- name: Configure Database 
+  hosts: database
+  gather_facts: true
+  become: true
+  remote_user: ubuntu
+  tasks:
+    - name: Synchronise files between controller database
+      ansible.posix.synchronize:
+        src: /home/ubuntu/application/environment/db_env
+        dest: /home/ubuntu/
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+    - name: install mongodb
+      apt:
+        update_cache: yes
+        name: mongodb
+        state: present
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+    - name: copy configuration file
+      shell: |
+        rm /etc/mongodb.conf
+        cp /home/ubuntu/db_env/mongod.conf /etc/mongodb.conf
+      become: true
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+    - name: set the permissions to mongodb file (equivalent to 0644)
+      file:
+        path: /etc/mongodb.conf
+        state: touch
+        mode: u=rw,g=r,o=r
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+
+    - name: Restart mongodb
+      become: true
+      shell: systemctl restart mongodb
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+    - name: enable mongodb
+      become: true
+      shell: systemctl enable mongodb
+      tags: ['never', 'ec2-configure', 'ec2-database']
+
+
+- name: Configure App
+  hosts: application
+  gather_facts: true
+  become: true
+  remote_user: ubuntu
+  tasks:
+  - name: Rsync provision script to application server
+    ansible.posix.synchronize:
+      src: /home/ubuntu/application/environment/app_env
+      dest: /home/ubuntu/
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: Rsync app files to application server
+    ansible.posix.synchronize:
+      src: /home/ubuntu/application/app
+      dest: /home/ubuntu/
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: "Install NGINX"
+    apt:
+      name: nginx
+      state: present
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: "Replace Default NGINX file"
+    shell: |
+      sudo rm /etc/nginx/sites-available/default
+      sudo cp /home/ubuntu/app_env/nginx.default /etc/nginx/sites-available/default
+      sudo systemctl restart nginx.service
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: "Add nodejs apt key"
+    apt_key:
+      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+      state: present
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: "Add nodejs 13.x ppa for apt repo"
+    apt_repository:
+      repo: deb https://deb.nodesource.com/node_13.x bionic main
+      update_cache: yes
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: Install nodejs
+    apt:
+      update_cache: yes
+      name: nodejs
+      state: present
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: Install NPM
+    npm:
+      global: yes
+      name: "{{ item }}"
+    with_items:
+      - firebase-tools
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+  - name: download latest npm + Mongoose
+    shell: |
+      npm install -g npm@latest
+      npm install mongoose -y
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+# Downloading pm2
+  - name: Install pm2
+    npm:
+      name: pm2
+      global: yes
+    tags: ['never', 'ec2-configure', 'ec2-application']
+
+    #   - name: seed + run app
+    #     shell: |
+    #       cd app/
+    #       node install
+    #       node seeds/seed.js
+    # 
+    #       pm2 kill
+    #       pm2 start app.js --name app
+    #     environment:
+    #       DB_HOST: mongodb://10.0.1.13:27017/posts?authSource=admin
+    #     ignore_errors: True
+    #     tags: ['never', 'ec2-configure', 'ec2-application']
+
