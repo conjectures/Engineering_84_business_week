@@ -10,5 +10,6 @@
 7. [Week 7 - Cloud Computing and AWS](week07_cloud_computing_aws/)
 8. [Week 8 - CICD & Jenkins](week08_cicd/)
 9. [Week 9 - IAC & Ansible](week09_iac/)
+9. [Week 10 - Terraform & High Availability](week10_iac_ha/)
 
 
